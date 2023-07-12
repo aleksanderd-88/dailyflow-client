@@ -5,17 +5,23 @@
     </main>
 
     <footer>
-      <button type="button" class="overview__action-btn">
+      <button type="button" class="overview__action-btn" @click="searchbarIsVisible = true">
         <span class="material-symbols-outlined material-symbols-outlined--medium">
           add
         </span>
       </button>
+
+      
+      <TheSearchBar :is-visible="searchbarIsVisible" @close="searchbarIsVisible = false" />
     </footer>
   </div>
 </template>
 
 <script setup lang="ts">
+import TheSearchBar from '@/components/molecules/TheSearchBar.vue';
+import { ref } from 'vue'
 
+const searchbarIsVisible = ref(false)
 </script>
 
 <style lang="scss" scoped>
