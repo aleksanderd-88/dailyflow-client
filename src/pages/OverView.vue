@@ -12,13 +12,13 @@
       </button>
 
       
-      <TheSearchBar :is-visible="searchbarIsVisible" @close="searchbarIsVisible = false" />
+      <AppForm :is-visible="searchbarIsVisible" @close="searchbarIsVisible = false" />
     </footer>
   </div>
 </template>
 
 <script setup lang="ts">
-import TheSearchBar from '@/components/molecules/TheSearchBar.vue';
+import AppForm from '@/components/molecules/AppForm.vue';
 import { ref } from 'vue'
 
 const searchbarIsVisible = ref(false)
