@@ -1,7 +1,7 @@
 <template>
   <div class="l-base overview">
     <main class="l-base__content">
-      <h1>Overview page</h1>
+      <h1 class="l-base__headline">My list</h1>
     </main>
 
     <footer>
