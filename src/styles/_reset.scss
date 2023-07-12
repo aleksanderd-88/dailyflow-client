@@ -36,10 +36,19 @@ button {
   cursor: pointer;
   border: none;
   outline: none;
+  display: flex;
+  align-items: center;
   background-color: transparent;
 }
 
 a {
   color: #222;
   text-decoration: none;
+}
+
+//- Google icon
+.material-symbols-outlined {
+  &--medium {
+    font-size: 1.8rem;
+  }
 }
