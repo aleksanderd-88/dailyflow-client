@@ -1,0 +1,9 @@
+// Base layout
+.l-base {
+  &__content {
+    width: 100%;
+    max-width: 1600px;
+    margin: auto;
+    padding: 0 1rem;
+  }
+}
