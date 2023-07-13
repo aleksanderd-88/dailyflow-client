@@ -2,8 +2,13 @@
 .l-base {
   &__content {
     width: 100%;
+    height: calc(100vh - 60px);
     max-width: 1600px;
     margin: auto;
     padding: 1rem;
+  }
+
+  &__headline {
+    font-weight: 200;
   }
 }

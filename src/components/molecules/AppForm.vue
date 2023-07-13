@@ -25,7 +25,7 @@
 <script setup lang="ts">
 import AppOverlay from '@/components/organisms/AppOverlay.vue'
 import { computed, ref, watch } from 'vue';
-import API from '@/services/api'
+import { useAPIStore } from '@/stores/Api';
 
 const props = defineProps({
   isVisible: {
@@ -57,13 +57,10 @@ const createProject = () => {
   if ( !name.value ) return
 
   const data = { name: name.value }
-  API.createProject({ data }).then(({ data }) => {
-    console.log(data)
+  useAPIStore().createProject({ data }).then(() => {
     emit('close')
     name.value = ''
-    API.listProjects()
   })
-  .catch(err => console.log(err))
 }
 </script>
 

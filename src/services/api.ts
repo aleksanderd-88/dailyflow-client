@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { type AxiosResponse } from 'axios'
 
 const client = axios.create({
   baseURL: `${import.meta.env.VITE_API_URL}`,
@@ -14,7 +14,7 @@ export default {
   createProject(params: ParamType) {
     return client.post('/projects/create', params)
   },
-  listProjects() {
+  listProjects(): Promise<AxiosResponse> {
     return client.get('/projects/list')
   }
 }

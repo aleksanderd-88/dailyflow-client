@@ -2,6 +2,8 @@
   <div class="l-base overview">
     <main class="l-base__content">
       <h1 class="l-base__headline">My list</h1>
+
+      <ProjectList :projects="projects" />
     </main>
 
     <footer>
@@ -18,17 +20,20 @@
 
 <script setup lang="ts">
 import AppForm from '@/components/molecules/AppForm.vue';
-import { ref } from 'vue'
-import API from '@/services/api'
+import { computed, ref } from 'vue'
+import ProjectList from '@/components/molecules/Project/ProjectList.vue';
+import { useAPIStore } from '@/stores/Api'
 
 const searchbarIsVisible = ref(false)
 
-API.listProjects().then(({ data }) => console.log(data))
-.catch(err => console.log(err))
+const projects = computed(() => useAPIStore().items)
+
+useAPIStore().listProjects()
 </script>
 
 <style lang="scss" scoped>
   .overview {
+    background-color: #EFEFF5;
     &__action-btn {
       position: fixed;
       bottom: 1rem;
