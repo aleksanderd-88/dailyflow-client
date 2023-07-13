@@ -1,6 +1,6 @@
 <template>
   <AppOverlay :is-visible="isVisible" @close="$emit('close')">
-    <form class="search-bar" :class="modifiedClass" @submit.prevent>
+    <form class="search-bar" :class="modifiedClass" @submit.prevent="createProject()">
 
       <div class="search-bar__row">
         <div class="search-bar__col">
@@ -8,7 +8,13 @@
         </div>
         
         <div class="search-bar__col">
-          <input type="text" id="project_title" class="search-bar__text-field" ref="textfieldRef" />
+          <input 
+            type="text" 
+            id="project_title" 
+            class="search-bar__text-field" 
+            v-model="name" 
+            ref="textfieldRef" 
+          />
           <button class="search-bar__submit-btn">Save</button>
         </div>
       </div>
@@ -19,6 +25,7 @@
 <script setup lang="ts">
 import AppOverlay from '@/components/organisms/AppOverlay.vue'
 import { computed, ref, watch } from 'vue';
+import API from '@/services/api'
 
 const props = defineProps({
   isVisible: {
@@ -27,7 +34,12 @@ const props = defineProps({
   }
 })
 
+const emit = defineEmits<{
+  (event: 'close'): void
+}>()
+
 const textfieldRef = ref<HTMLInputElement | null>(null)
+const name = ref('')
 
 watch(() => props.isVisible, val => {
   if ( val ) {
@@ -40,6 +52,19 @@ watch(() => props.isVisible, val => {
 })
 
 const modifiedClass = computed(() => props.isVisible && 'search-bar--visible')
+
+const createProject = () => {
+  if ( !name.value ) return
+
+  const data = { name: name.value }
+  API.createProject({ data }).then(({ data }) => {
+    console.log(data)
+    emit('close')
+    name.value = ''
+    API.listProjects()
+  })
+  .catch(err => console.log(err))
+}
 </script>
 
 <style lang="scss" scoped>

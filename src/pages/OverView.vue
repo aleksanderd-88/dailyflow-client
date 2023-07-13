@@ -10,7 +10,6 @@
           add
         </span>
       </button>
-
       
       <AppForm :is-visible="searchbarIsVisible" @close="searchbarIsVisible = false" />
     </footer>
@@ -20,8 +19,12 @@
 <script setup lang="ts">
 import AppForm from '@/components/molecules/AppForm.vue';
 import { ref } from 'vue'
+import API from '@/services/api'
 
 const searchbarIsVisible = ref(false)
+
+API.listProjects().then(({ data }) => console.log(data))
+.catch(err => console.log(err))
 </script>
 
 <style lang="scss" scoped>
