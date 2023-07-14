@@ -25,8 +25,15 @@ import ProjectListItem from './ProjectListItem.vue';
   .project-list {
     margin: 1rem 0;
     display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
     grid-auto-rows: 150px;
-    grid-template-columns: repeat(2, 1fr);
+
+    @media (min-width: 500px) {
+      display: flex;
+      flex-wrap: wrap;
+      grid-auto-rows: unset;
+      grid-template-columns: unset;
+    }
   }
 </style>

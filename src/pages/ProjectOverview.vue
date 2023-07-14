@@ -15,7 +15,7 @@
 
     </header>
 
-    <main class="l-base__content">
+    <main class="project-overview__content l-base__content">
       <TaskList :tasks="tasks" />
 
       <button
@@ -98,11 +98,16 @@ import TaskList from '@/components/molecules/Task/TaskList.vue'
     }
 
     &__content {
-      text-align: center;
+      height: 100%;
+      min-height: calc(100vh - 210px);
+      @media (min-width: 1024px) {
+        width: 1024px;
+        margin: auto;
+      }
     }
 
     &__hide-resolved-btn {
-      width: 50%;
+      width: 100%;
       margin: 4rem auto;
       justify-content: center;
       padding: 10px 20px;
@@ -110,6 +115,10 @@ import TaskList from '@/components/molecules/Task/TaskList.vue'
       font-weight: 500;
       background-color: rgba(#C4ACFC, .2);
       color: #2D383D;
+
+      @media (min-width: 400px) {
+        width: 200px;
+      }
     }
 
     &__action-btn {

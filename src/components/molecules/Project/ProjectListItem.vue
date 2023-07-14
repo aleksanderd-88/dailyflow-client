@@ -44,5 +44,10 @@ import { useRouter } from 'vue-router';
       font-size: .8rem;
       font-weight: 500;
     }
+
+    @media (min-width: 450px) {
+      flex-basis: 150px;
+      height: 150px;
+    }
   }
 </style>
