@@ -16,7 +16,7 @@ const router = createRouter({
       beforeEnter: ((to, from) => setPageTitle('Start'))
     },
     {
-      path: '/project/:id/overview',
+      path: '/projects/:id',
       name: 'projectOverview',
       component: () => import('@/pages/ProjectOverview.vue'),
       beforeEnter: (to, from) => {
