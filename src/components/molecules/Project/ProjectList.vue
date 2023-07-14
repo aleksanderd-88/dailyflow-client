@@ -32,8 +32,6 @@ import ProjectListItem from './ProjectListItem.vue';
     @media (min-width: 500px) {
       display: flex;
       flex-wrap: wrap;
-      grid-auto-rows: unset;
-      grid-template-columns: unset;
     }
   }
 </style>
