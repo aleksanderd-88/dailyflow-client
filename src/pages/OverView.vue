@@ -14,7 +14,8 @@
       </button>
       
       <AppForm 
-        :is-visible="searchbarIsVisible" 
+        :is-visible="searchbarIsVisible"
+        label="Name your project" 
         @close="searchbarIsVisible = false"
         @submit="createProject($event)"
       />

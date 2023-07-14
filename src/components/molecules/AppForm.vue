@@ -4,7 +4,7 @@
 
       <div class="search-bar__row">
         <div class="search-bar__col">
-          <label for="project_title" class="search-bar__label">Name your project</label>
+          <label for="project_title" class="search-bar__label" v-if="label">{{ label }}</label>
         </div>
         
         <div class="search-bar__col">
@@ -30,6 +30,10 @@ const props = defineProps({
   isVisible: {
     type: Boolean,
     default: false
+  },
+  label: {
+    type: String,
+    default: null
   }
 })
 
