@@ -68,6 +68,7 @@ import TaskList from '@/components/molecules/Task/TaskList.vue'
 
 <style lang="scss" scoped>
   .project-overview {
+    background-color: #EFEFF5;
     &__info {
       height: 150px;
       display: flex;

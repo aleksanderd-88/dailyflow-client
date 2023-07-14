@@ -13,7 +13,7 @@
       <span class="material-symbols-outlined">
         grade
       </span>
-      
+
     </button>
   </div>
 </template>
@@ -46,7 +46,7 @@ import { ref, type PropType, computed } from 'vue'
     &__action-btn {
       &--bookmark {
         span {
-          color: #ffeb3b;
+          color: #ffc400;
         }
       }
     }
