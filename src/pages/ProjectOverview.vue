@@ -16,7 +16,7 @@
     </header>
 
     <main class="l-base__content">
-
+      <TaskList :tasks="tasks" />
     </main>
 
     <footer>
@@ -42,6 +42,7 @@ import { useAPIStore } from '@/stores/Api';
 import { computed, ref } from 'vue';
 import { useLoadingStore } from '@/stores/app/loading'
 import AppForm from '@/components/molecules/AppForm.vue';
+import TaskList from '@/components/molecules/Task/TaskList.vue'
 
   const router = useRouter()
   const searchbarIsVisible = ref(false)
@@ -49,6 +50,7 @@ import AppForm from '@/components/molecules/AppForm.vue';
   const isLoading = computed(() => useLoadingStore().isLoading.value)
 
   const project = computed(() => useAPIStore().item)
+  const tasks = computed(() => project.value?.tasks || [])
 
   const taskCount = computed(() => project.value?.tasks.length)
 
