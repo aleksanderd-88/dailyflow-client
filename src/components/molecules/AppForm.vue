@@ -1,6 +1,6 @@
 <template>
   <AppOverlay :is-visible="isVisible" @close="$emit('close')">
-    <form class="search-bar" :class="modifiedClass" @submit.prevent="createProject()">
+    <form class="search-bar" :class="modifiedClass" @submit.prevent="handleSubmit()">
 
       <div class="search-bar__row">
         <div class="search-bar__col">
@@ -25,7 +25,6 @@
 <script setup lang="ts">
 import AppOverlay from '@/components/organisms/AppOverlay.vue'
 import { computed, ref, watch } from 'vue';
-import { useAPIStore } from '@/stores/Api';
 
 const props = defineProps({
   isVisible: {
@@ -36,6 +35,7 @@ const props = defineProps({
 
 const emit = defineEmits<{
   (event: 'close'): void
+  (event: 'submit', name: string): void
 }>()
 
 const textfieldRef = ref<HTMLInputElement | null>(null)
@@ -53,14 +53,10 @@ watch(() => props.isVisible, val => {
 
 const modifiedClass = computed(() => props.isVisible && 'search-bar--visible')
 
-const createProject = () => {
-  if ( !name.value ) return
-
-  const data = { name: name.value }
-  useAPIStore().createProject({ data }).then(() => {
-    emit('close')
-    name.value = ''
-  })
+const handleSubmit = () => {
+  emit('close')
+  emit('submit', name.value)
+  name.value = ''
 }
 </script>
 

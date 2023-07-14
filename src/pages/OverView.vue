@@ -13,7 +13,11 @@
         </span>
       </button>
       
-      <AppForm :is-visible="searchbarIsVisible" @close="searchbarIsVisible = false" />
+      <AppForm 
+        :is-visible="searchbarIsVisible" 
+        @close="searchbarIsVisible = false"
+        @submit="createProject($event)"
+      />
     </footer>
   </div>
 </template>
@@ -29,6 +33,13 @@ const searchbarIsVisible = ref(false)
 const projects = computed(() => useAPIStore().items)
 
 useAPIStore().listProjects()
+
+const createProject = (name: string) => {
+  if ( !name ) return
+
+  const data = { name: name }
+  useAPIStore().createProject({ data })
+}
 </script>
 
 <style lang="scss" scoped>
