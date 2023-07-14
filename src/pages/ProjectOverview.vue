@@ -10,7 +10,7 @@
 
       <div class="horizontal-center-align">
         <h1 class="project-overview__name" v-if="!isLoading">{{ project?.name }}</h1>
-        <p class="project-overview__task-count">5 items</p>
+        <p class="project-overview__task-count" v-if="taskCount">{{ `${ taskCount } ${(taskCount > 1 ? 'items' : 'item')}` }}</p>
       </div>
 
     </header>
@@ -50,9 +50,17 @@ import AppForm from '@/components/molecules/AppForm.vue';
 
   const project = computed(() => useAPIStore().item)
 
+  const taskCount = computed(() => project.value?.tasks.length)
+
   const navigateBack = () => router.go(-1)
-  const createTask = (name: string) => {
-    console.log(name)
+
+  const createTask = (description: string) => {
+    const data = {
+      projectId: project.value?._id,
+      description
+    }
+
+    useAPIStore().createTask({ data })
   }
 </script>
 

@@ -11,6 +11,7 @@ type ParamType = {
 }
 
 export default {
+  // Projects
   createProject(params: ParamType) {
     return client.post('/projects/create', params)
   },
@@ -19,5 +20,9 @@ export default {
   },
   getProject(id: string): Promise<AxiosResponse> {
     return client.get(`/projects/${ id }/get`)
+  },
+  // Tasks
+  createTask(params: ParamType) {
+    return client.post('/tasks/create', params)
   }
 }
