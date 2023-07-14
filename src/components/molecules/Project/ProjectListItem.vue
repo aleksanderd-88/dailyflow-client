@@ -1,5 +1,12 @@
 <template>
   <button type="button" class="project-item" @click="navigateTo()">
+
+    <button type="button" class="project-item__options" @click.stop>
+      <span class="material-symbols-outlined">
+        more_vert
+      </span>
+    </button>
+
     <h1 class="project-item__name">
       {{ project.name }}
     </h1>
@@ -38,7 +45,18 @@ import { useRouter } from 'vue-router';
     justify-content: center;
     gap: .5rem;
     background-color: #fff;
+    position: relative;
     box-shadow: 0 7px 12px rgba(#000, .1);
+
+    &__options {
+      position: absolute;
+      top: 1rem;
+      right: 0;
+      
+      span {
+        font-size: 1.3rem;
+      }
+    }
 
     &__name {
       font-size: .8rem;
