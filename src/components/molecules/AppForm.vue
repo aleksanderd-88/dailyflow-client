@@ -54,6 +54,8 @@ watch(() => props.isVisible, val => {
 const modifiedClass = computed(() => props.isVisible && 'search-bar--visible')
 
 const handleSubmit = () => {
+  if ( !name.value ) return
+  
   emit('close')
   emit('submit', name.value)
   name.value = ''
