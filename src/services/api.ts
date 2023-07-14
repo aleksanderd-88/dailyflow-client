@@ -24,5 +24,8 @@ export default {
   // Tasks
   createTask(params: ParamType) {
     return client.post('/tasks/create', params)
+  },
+  markComplete(id: string) {
+    return client.patch(`/tasks/${ id }/mark-complete`)
   }
 }

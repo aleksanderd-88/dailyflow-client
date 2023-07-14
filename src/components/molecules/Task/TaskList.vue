@@ -3,6 +3,7 @@
     <TaskListItem 
       v-for="task in tasks" :key="task._id"
       :task="task"
+      @click="markComplete(task._id, task.projectId)"
     />
   </div>
 </template>
@@ -10,13 +11,22 @@
 <script setup lang="ts">
 import { type PropType } from 'vue'
 import TaskListItem from './TaskListItem.vue';
+import API from '@/services/api'
+import { useAPIStore } from '@/stores/api';
 
   defineProps({
     tasks: {
-      type: Array as PropType<{ _id: string, description: string, completed: boolean }[]>,
+      type: Array as PropType<{ _id: string, description: string, completed: boolean, projectId: string }[]>,
       default: () => ([])
     }
   })
+
+  const markComplete = (id: string, projectId: string) => {
+    if ( !confirm('Mark as complete?') ) return
+    
+    API.markComplete(id).then(() => useAPIStore().getProject(projectId))
+    .catch((err) => console.log(err))
+  }
 
 </script>
 
