@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import OverView from '@/pages/OverView.vue'
+import { useAPIStore } from '@/stores/api'
 
 const setPageTitle = (title: string) => {
   document.title = `DailyFlow \u2022 ${ title }`
@@ -13,6 +14,17 @@ const router = createRouter({
       name: 'overview',
       component: OverView,
       beforeEnter: ((to, from) => setPageTitle('Start'))
+    },
+    {
+      path: '/project/:id/overview',
+      name: 'projectOverview',
+      component: () => import('@/pages/ProjectOverview.vue'),
+      beforeEnter: (to, from) => {
+        useAPIStore().getProject(to.params?.id.toString()).then(() => {
+          setPageTitle('Overview')
+          return true
+        })
+      }
     }
   ]
 })

@@ -1,5 +1,5 @@
 <template>
-  <button type="button" class="project-item">
+  <button type="button" class="project-item" @click="navigateTo()">
     <h1 class="project-item__name">
       {{ project.name }}
     </h1>
@@ -7,13 +7,28 @@
 </template>
 
 <script setup lang="ts">
-  defineProps({
+import { useRouter } from 'vue-router';
+
+  const props = defineProps({
     project: {
       type: Object,
       required: true,
       default: () => ({})
     }
   })
+
+  const router = useRouter()
+
+  const navigateTo = () => {
+    if ( !props.project ) return
+    
+    router.push({ 
+      name: 'projectOverview', 
+      params: { 
+        id: props.project._id.toString()
+      } 
+    })
+  }
 </script>
 
 <style lang="scss" scoped>

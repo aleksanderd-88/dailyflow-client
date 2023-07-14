@@ -48,4 +48,4 @@ useAPIStore().listProjects()
       box-shadow: 0 7px 12px -4px rgba(#000, .5);
     }
   }
-</style>
+</style>@/stores/api

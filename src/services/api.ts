@@ -16,5 +16,8 @@ export default {
   },
   listProjects(): Promise<AxiosResponse> {
     return client.get('/projects/list')
+  },
+  getProject(id: string): Promise<AxiosResponse> {
+    return client.get(`/projects/${ id }/get`)
   }
 }
