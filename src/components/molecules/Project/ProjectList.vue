@@ -14,7 +14,7 @@ import ProjectListItem from './ProjectListItem.vue';
 
   defineProps({
     projects: {
-      type: Array as PropType<{ name: string, _id: string }[]>,
+      type: Array as PropType<{ name: string, _id: string, tasks: Record<string, unknown>[] }[]>,
       default: () => ([])
     }
   })

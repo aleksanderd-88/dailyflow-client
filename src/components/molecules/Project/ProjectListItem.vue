@@ -7,13 +7,19 @@
       </span>
     </button>
 
-    <h1 class="project-item__name">
-      {{ project.name }}
-    </h1>
+    <div>
+      <h1 class="project-item__name">
+        {{ project.name }}
+      </h1>
+      <p class="project-item__task-count" v-if="taskCount">
+        {{ `${ taskCount } ${ taskCount > 0 ? 'items' : 'item'}` }}
+      </p>
+    </div>
   </button>
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 
   const props = defineProps({
@@ -25,6 +31,8 @@ import { useRouter } from 'vue-router';
   })
 
   const router = useRouter()
+
+  const taskCount = computed(() => props.project?.tasks?.length)
 
   const navigateTo = () => {
     if ( !props.project ) return
@@ -61,6 +69,11 @@ import { useRouter } from 'vue-router';
     &__name {
       font-size: .8rem;
       font-weight: 500;
+    }
+
+    &__task-count {
+      font-size: .7rem;
+      color: #B1B2C3;
     }
 
     @media (min-width: 450px) {

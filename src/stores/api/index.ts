@@ -4,7 +4,7 @@ import API from '@/services/api'
 import { useLoadingStore } from "../app/loading";
 
 export const useAPIStore = defineStore('api', () => {
-  const projects = ref<{ name: string, _id: string }[]>([])
+  const projects = ref<{ name: string, _id: string, tasks: Record<string, unknown>[] }[]>([])
   const project = ref<{ name: string, _id: string, tasks: Record<string, unknown>[] }>()
 
   const createProject = async (params: { data: Record<string, unknown>}) => {
