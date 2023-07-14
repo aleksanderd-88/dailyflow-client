@@ -38,7 +38,7 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
-import { useAPIStore } from '@/stores/Api';
+import { useAPIStore } from '@/stores/api';
 import { computed, ref } from 'vue';
 import { useLoadingStore } from '@/stores/app/loading'
 import AppForm from '@/components/molecules/AppForm.vue';
@@ -98,4 +98,4 @@ import TaskList from '@/components/molecules/Task/TaskList.vue'
       box-shadow: 0 7px 12px -4px rgba(#000, .5);
     }
   }
-</style>@/stores/api
+</style>

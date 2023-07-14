@@ -27,7 +27,7 @@
 import AppForm from '@/components/molecules/AppForm.vue';
 import { computed, ref } from 'vue'
 import ProjectList from '@/components/molecules/Project/ProjectList.vue';
-import { useAPIStore } from '@/stores/Api'
+import { useAPIStore } from '@/stores/api'
 
 const searchbarIsVisible = ref(false)
 
@@ -60,4 +60,4 @@ const createProject = (name: string) => {
       box-shadow: 0 7px 12px -4px rgba(#000, .5);
     }
   }
-</style>@/stores/api
+</style>
