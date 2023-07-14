@@ -1,10 +1,17 @@
 <template>
   <button type="button" class="task-item" :class="modifiedClass">
-    <p class="task-item__description">
-      {{ task.description }}
-    </p>
+    <div class="flex-content">
+      <span class="material-symbols-outlined" v-if="task.completed">
+        done
+      </span>
+      
+      <p class="task-item__description">
+        {{ task.description }}
+      </p>
+    </div>
     
-    <button 
+    <button
+      v-if="!task.completed"
       type="button" 
       class="task-item__action-btn" 
       @click.stop="taskBookmarked = !taskBookmarked">

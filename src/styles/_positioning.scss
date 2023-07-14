@@ -3,3 +3,9 @@
   left: 50%;
   transform: translateX(-50%);
 }
+
+.flex-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}

@@ -3,7 +3,7 @@
     <TaskListItem 
       v-for="task in tasks" :key="task._id"
       :task="task"
-      @click="markComplete(task._id, task.projectId)"
+      @click="markComplete(task._id, task.projectId, task.completed)"
     />
   </div>
 </template>
@@ -21,8 +21,12 @@ import { useAPIStore } from '@/stores/api';
     }
   })
 
-  const markComplete = (id: string, projectId: string) => {
-    if ( !confirm('Mark as complete?') ) return
+  const markComplete = (id: string, projectId: string, completed = false) => {
+    let text = 'Mark as resolved?'
+    if ( completed ) 
+      text = 'Mark as un-resolved?'
+
+    if ( !confirm(text) ) return
     
     API.markComplete(id).then(() => useAPIStore().getProject(projectId))
     .catch((err) => console.log(err))

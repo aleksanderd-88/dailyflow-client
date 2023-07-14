@@ -17,6 +17,10 @@
 
     <main class="l-base__content">
       <TaskList :tasks="tasks" />
+
+      <button type="button" class="project-overview__hide-resolved-btn">HIDE RESOLVED</button>
+
+      <TaskList :tasks="resolvedTasks" />
     </main>
 
     <footer>
@@ -50,7 +54,8 @@ import TaskList from '@/components/molecules/Task/TaskList.vue'
   const isLoading = computed(() => useLoadingStore().isLoading.value)
 
   const project = computed(() => useAPIStore().item)
-  const tasks = computed(() => project.value?.tasks || [])
+  const tasks = computed(() => project.value?.tasks.filter(task => !task.completed) || [])
+  const resolvedTasks = computed(() => project.value?.tasks.filter(task => task.completed))
 
   const taskCount = computed(() => project.value?.tasks.length)
 
@@ -82,6 +87,21 @@ import TaskList from '@/components/molecules/Task/TaskList.vue'
       span {
         font-size: 3rem;
       }
+    }
+
+    &__content {
+      text-align: center;
+    }
+
+    &__hide-resolved-btn {
+      width: 50%;
+      margin: 4rem auto;
+      justify-content: center;
+      padding: 10px 20px;
+      border-radius: 40px;
+      font-weight: 500;
+      background-color: rgba(#C4ACFC, .2);
+      color: #2D383D;
     }
 
     &__action-btn {
