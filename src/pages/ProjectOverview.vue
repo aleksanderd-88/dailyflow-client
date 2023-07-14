@@ -18,9 +18,16 @@
     <main class="l-base__content">
       <TaskList :tasks="tasks" />
 
-      <button type="button" class="project-overview__hide-resolved-btn">HIDE RESOLVED</button>
+      <button
+        v-if="resolvedTasks?.length"
+        type="button" 
+        class="project-overview__hide-resolved-btn"
+        @click="resolvedTaskListIsVisible = !resolvedTaskListIsVisible"
+      >
+        {{ `${ resolvedTaskListIsVisible ? 'HIDE RESOLVED' : 'SHOW RESOLVED' }` }}
+      </button>
 
-      <TaskList :tasks="resolvedTasks" />
+      <TaskList :tasks="resolvedTasks" v-if="resolvedTaskListIsVisible" />
     </main>
 
     <footer>
@@ -50,6 +57,7 @@ import TaskList from '@/components/molecules/Task/TaskList.vue'
 
   const router = useRouter()
   const searchbarIsVisible = ref(false)
+  const resolvedTaskListIsVisible = ref(true)
 
   const isLoading = computed(() => useLoadingStore().isLoading.value)
 
