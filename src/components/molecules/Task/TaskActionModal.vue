@@ -36,6 +36,7 @@
         <button 
           type="button" 
           class="action-modal__action-btn action-modal__action-btn--delete-btn"
+          @click="deleteTask(task._id)"
         >
           Delete
           <span class="material-symbols-outlined">
@@ -87,6 +88,12 @@ import AppOverlay from '@/components/organisms/AppOverlay.vue';
   const editTask = (task: TaskType) => {
     emit('edit', task)
     emit('close')
+  }
+
+  const deleteTask = (id: string) => {
+    if ( !confirm('You are about to delete this task. Do you wish to continue?') ) return
+
+    useAPIStore().deleteTask(id).then(() => emit('close'))
   }
 </script>
 

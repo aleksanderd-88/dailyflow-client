@@ -34,4 +34,7 @@ export default {
   editTask(id: string, params: ParamType) {
     return client.patch(`/tasks/${ id }/edit`, params)
   },
+  deleteTask(id: string) {
+    return client.delete(`/tasks/${ id }/delete`)
+  }
 }
