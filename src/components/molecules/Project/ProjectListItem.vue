@@ -1,11 +1,15 @@
 <template>
   <button type="button" class="project-item" @click="navigateTo()">
 
-    <button type="button" class="project-item__options" @click.stop>
-      <span class="material-symbols-outlined">
-        more_vert
-      </span>
-    </button>
+    <section class="project-item__actions">
+      <button type="button" class="project-item__action-btn" @click.stop>
+        <span class="material-symbols-outlined">
+          more_vert
+        </span>
+      </button>
+    </section>
+
+    <ProjectOptions class="project-item__options" />
 
     <div>
       <h1 class="project-item__name">
@@ -21,6 +25,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
+import ProjectOptions from '@/components/molecules/Project/ProjectOptions.vue'
 
   const props = defineProps({
     project: {
@@ -56,14 +61,27 @@ import { useRouter } from 'vue-router';
     position: relative;
     box-shadow: 0 7px 12px rgba(#000, .1);
 
-    &__options {
+    &__actions {
       position: absolute;
       top: 1rem;
       right: 0;
-      
+    }
+
+    &__action-btn {
       span {
         font-size: 1.3rem;
       }
+    }
+
+    &__options {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      display: flex;
+      backdrop-filter: blur(2px);
     }
 
     &__name {
