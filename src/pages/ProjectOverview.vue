@@ -53,7 +53,7 @@
 </template>
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
+import { onBeforeRouteLeave, useRouter } from 'vue-router';
 import { useAPIStore } from '@/stores/api';
 import { computed, ref, watch } from 'vue';
 import { useLoadingStore } from '@/stores/app/loading'
@@ -72,6 +72,13 @@ import TaskList from '@/components/molecules/Task/TaskList.vue'
   const router = useRouter()
   const searchbarIsVisible = ref(false)
   const resolvedTaskListIsVisible = ref(true)
+
+  onBeforeRouteLeave((to, from) => {
+    if ( searchbarIsVisible.value ) {
+      searchbarIsVisible.value = false
+      return false
+    }
+  })
 
   watch(() => searchbarIsVisible.value, (val) => {
     if ( !val ) {

@@ -28,6 +28,7 @@ import AppForm from '@/components/molecules/AppForm.vue';
 import { computed, ref } from 'vue'
 import ProjectList from '@/components/molecules/Project/ProjectList.vue';
 import { useAPIStore } from '@/stores/api'
+import { onBeforeRouteLeave } from 'vue-router';
 
 const searchbarIsVisible = ref(false)
 
@@ -41,6 +42,13 @@ const createProject = (name: string) => {
   const data = { name: name }
   useAPIStore().createProject({ data })
 }
+
+onBeforeRouteLeave((to, from) => {
+  if ( searchbarIsVisible.value ) {
+    searchbarIsVisible.value = false
+    return false
+  }
+})
 </script>
 
 <style lang="scss" scoped>
