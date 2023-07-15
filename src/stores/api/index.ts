@@ -3,9 +3,16 @@ import { computed, ref } from "vue";
 import API from '@/services/api'
 import { useLoadingStore } from "../app/loading";
 
+type TaskType = {
+  _id: string, 
+  description: string, 
+  completed: boolean, 
+  projectId: string
+}
+
 export const useAPIStore = defineStore('api', () => {
-  const projects = ref<{ name: string, _id: string, tasks: Record<string, unknown>[] }[]>([])
-  const project = ref<{ name: string, _id: string, tasks: Record<string, unknown>[] }>()
+  const projects = ref<{ name: string, _id: string, tasks: TaskType[] }[]>([])
+  const project = ref<{ name: string, _id: string, tasks: TaskType[] }>()
 
   const createProject = async (params: { data: Record<string, unknown>}) => {
     useLoadingStore().setLoading(true)
