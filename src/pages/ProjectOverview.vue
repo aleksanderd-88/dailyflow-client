@@ -55,7 +55,7 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
 import { useAPIStore } from '@/stores/api';
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useLoadingStore } from '@/stores/app/loading'
 import AppForm from '@/components/molecules/AppForm.vue';
 import TaskList from '@/components/molecules/Task/TaskList.vue'
@@ -72,6 +72,13 @@ import TaskList from '@/components/molecules/Task/TaskList.vue'
   const router = useRouter()
   const searchbarIsVisible = ref(false)
   const resolvedTaskListIsVisible = ref(true)
+
+  watch(() => searchbarIsVisible.value, (val) => {
+    if ( !val ) {
+      isEditMode.value = false
+      task.value = {} as TaskType
+    }
+  })
 
   const label = computed(() => isEditMode.value ? 'Edit description' : 'Give your task a description')
 
@@ -103,9 +110,7 @@ import TaskList from '@/components/molecules/Task/TaskList.vue'
     isEditMode.value = true
   }
 
-  const closeForm = () => {
-    searchbarIsVisible.value = false
-  }
+  const closeForm = () => searchbarIsVisible.value = false
 </script>
 
 <style lang="scss" scoped>
