@@ -30,5 +30,8 @@ export default {
   },
   markComplete(id: string) {
     return client.patch(`/tasks/${ id }/mark-complete`)
-  }
+  },
+  editTask(id: string, params: ParamType) {
+    return client.patch(`/tasks/${ id }/edit`, params)
+  },
 }

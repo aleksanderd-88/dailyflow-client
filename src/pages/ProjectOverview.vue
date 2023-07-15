@@ -16,7 +16,10 @@
     </header>
 
     <main class="project-overview__content l-base__content">
-      <TaskList :tasks="tasks" />
+      <TaskList 
+        :tasks="tasks"
+        @edit="setEditMode($event)"
+      />
 
       <button
         v-if="resolvedTasks?.length"
@@ -39,8 +42,10 @@
       
       <AppForm 
         :is-visible="searchbarIsVisible"
-        label="Give your task a description" 
-        @close="searchbarIsVisible = false"
+        :input="task.description"
+        :label="label"
+        :editMode="isEditMode" 
+        @close="closeForm()"
         @submit="createTask($event)"
       />
     </footer>
@@ -55,9 +60,20 @@ import { useLoadingStore } from '@/stores/app/loading'
 import AppForm from '@/components/molecules/AppForm.vue';
 import TaskList from '@/components/molecules/Task/TaskList.vue'
 
+  type TaskType = {
+    _id: string, 
+    description: string, 
+    completed: boolean, 
+    projectId: string
+  }
+
+  const task = ref({} as TaskType)
+  const isEditMode = ref(false)
   const router = useRouter()
   const searchbarIsVisible = ref(false)
   const resolvedTaskListIsVisible = ref(true)
+
+  const label = computed(() => isEditMode.value ? 'Edit description' : 'Give your task a description')
 
   const isLoading = computed(() => useLoadingStore().isLoading.value)
 
@@ -75,7 +91,20 @@ import TaskList from '@/components/molecules/Task/TaskList.vue'
       description
     }
 
+    if ( isEditMode.value )
+      return useAPIStore().editTask(task.value._id?.toString(), { data })
+
     useAPIStore().createTask({ data })
+  }
+
+  const setEditMode = (param: TaskType) => {
+    searchbarIsVisible.value = true
+    task.value = param
+    isEditMode.value = true
+  }
+
+  const closeForm = () => {
+    searchbarIsVisible.value = false
   }
 </script>
 

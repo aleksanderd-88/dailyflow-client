@@ -10,6 +10,7 @@
       :task="task" 
       :is-visible="actionModalIsVisible" 
       @close="actionModalIsVisible = false"
+      @edit="$emit('edit', $event)"
     />
   </div>
 </template>

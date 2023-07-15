@@ -15,7 +15,7 @@
             v-model="name" 
             ref="textfieldRef" 
           />
-          <button class="search-bar__submit-btn">Save</button>
+          <button class="search-bar__submit-btn">{{ buttonLabel }}</button>
         </div>
       </div>
     </form>
@@ -34,6 +34,14 @@ const props = defineProps({
   label: {
     type: String,
     default: null
+  },
+  input: {
+    type: String,
+    default: ''
+  },
+  editMode: {
+    type: Boolean,
+    default: false
   }
 })
 
@@ -55,7 +63,16 @@ watch(() => props.isVisible, val => {
   }
 })
 
+watch(() => props.editMode, val => {
+  if ( val ) {
+    name.value = props.input
+  } else {
+    name.value = ''
+  }
+})
+
 const modifiedClass = computed(() => props.isVisible && 'search-bar--visible')
+const buttonLabel = computed(() => props.editMode ? 'Edit' : 'Save')
 
 const handleSubmit = () => {
   if ( !name.value ) return

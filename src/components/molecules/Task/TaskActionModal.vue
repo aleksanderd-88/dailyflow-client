@@ -12,6 +12,7 @@
         <button 
           type="button" 
           class="action-modal__action-btn action-modal__action-btn--edit-btn"
+          @click="editTask(task)"
         >
           Edit
           <span class="material-symbols-outlined">
@@ -70,6 +71,7 @@ import AppOverlay from '@/components/organisms/AppOverlay.vue';
 
   const emit = defineEmits<{
     (event: 'close'): void
+    (event: 'edit', task: TaskType): void
   }>()
 
   const modifiedClass = computed(() => props.isVisible && 'action-modal--visible')
@@ -78,6 +80,11 @@ import AppOverlay from '@/components/organisms/AppOverlay.vue';
     API.markComplete(id).then(() => useAPIStore().getProject(projectId))
     .catch((err) => console.log(err))
     .finally(() => emit('close'))
+  }
+
+  const editTask = (task: TaskType) => {
+    emit('edit', task)
+    emit('close')
   }
 </script>
 

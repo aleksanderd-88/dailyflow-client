@@ -42,6 +42,13 @@ export const useAPIStore = defineStore('api', () => {
     .finally(() => useLoadingStore().setLoading(false))
   } 
 
+  const editTask = (id: string, params: { data: Record<string, unknown>}) => {
+    useLoadingStore().setLoading(true)
+    return API.editTask(id, params).then(() => getProject(project.value?._id.toString() as string))
+    .catch(error => console.log(error))
+    .finally(() => useLoadingStore().setLoading(false))
+  } 
+
   const clearData = () => {
     project.value = { name: '', _id: '', tasks: [] }
   }
@@ -55,6 +62,7 @@ export const useAPIStore = defineStore('api', () => {
     getProject,
     deleteProject,
     createTask,
+    editTask,
     clearData,
     items,
     item
