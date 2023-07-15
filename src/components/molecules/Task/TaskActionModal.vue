@@ -13,6 +13,7 @@
           type="button" 
           class="action-modal__action-btn action-modal__action-btn--edit-btn"
           @click="editTask(task)"
+          :disabled="task.completed"
         >
           Edit
           <span class="material-symbols-outlined">

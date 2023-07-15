@@ -39,6 +39,12 @@ button {
   display: flex;
   align-items: center;
   background-color: transparent;
+
+  &:disabled {
+    background-color: #ccc !important;
+    color: #999 !important;
+    cursor: not-allowed;
+  }
 }
 
 a {
