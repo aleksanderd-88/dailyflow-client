@@ -2,14 +2,18 @@
   <button type="button" class="project-item" @click="navigateTo()">
 
     <section class="project-item__actions">
-      <button type="button" class="project-item__action-btn" @click.stop>
+      <button type="button" class="project-item__action-btn" @click.stop="showOptions()">
         <span class="material-symbols-outlined">
           more_vert
         </span>
       </button>
     </section>
 
-    <ProjectOptions class="project-item__options" />
+    <ProjectOptions 
+      class="project-item__options" 
+      :class="modifiedClass"
+      @close="optionIsVisible = false" 
+    />
 
     <div>
       <h1 class="project-item__name">
@@ -23,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import ProjectOptions from '@/components/molecules/Project/ProjectOptions.vue'
 
@@ -36,8 +40,11 @@ import ProjectOptions from '@/components/molecules/Project/ProjectOptions.vue'
   })
 
   const router = useRouter()
+  const optionIsVisible = ref(false)
 
   const taskCount = computed(() => props.project?.tasks?.length)
+
+  const modifiedClass = computed(() => optionIsVisible.value && 'project-item__options--visible')
 
   const navigateTo = () => {
     if ( !props.project ) return
@@ -49,10 +56,13 @@ import ProjectOptions from '@/components/molecules/Project/ProjectOptions.vue'
       } 
     })
   }
+
+  const showOptions = () => optionIsVisible.value = true
 </script>
 
 <style lang="scss" scoped>
   .project-item {
+
     display: flex;
     align-items: center;
     justify-content: center;
@@ -79,9 +89,19 @@ import ProjectOptions from '@/components/molecules/Project/ProjectOptions.vue'
       right: 0;
       width: 100%;
       height: 100%;
-      z-index: 1;
+      z-index: 999;
       display: flex;
       backdrop-filter: blur(2px);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(2px);
+      transition: opacity .25s, visibility .25s, transform .25s ease;
+
+      &--visible {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
     }
 
     &__name {

@@ -1,12 +1,12 @@
 <template>
-  <div class="project-options">
-    <!-- <button type="button" class="project-options__delete-btn">
+  <div class="project-options" @click.self.stop>
+    <button type="button" class="project-options__close-btn" @click.stop="$emit('close')">
       <span class="material-symbols-outlined">
         close
       </span>
-    </button> -->
+    </button>
 
-    <button type="button" class="project-options__delete-btn">Delete</button>
+    <button type="button" class="project-options__delete-btn" @click.stop>Delete</button>
   </div>
 </template>
 
@@ -18,9 +18,9 @@
   .project-options {
     position: relative;
     
-    &__delete-btn {
+    &__close-btn {
       position: absolute;
-      top: 0;
+      top: .5rem;
       right: 0;
 
       span {
@@ -35,6 +35,9 @@
       display: flex;
       margin-top: auto;
       align-items: center;
+      font-weight: 500;
+      font-size: .8rem;
+      text-transform: uppercase;
       justify-content: center;
       background-color: lighten(#ff3d00, 5%)
     }
