@@ -13,10 +13,10 @@
           type="button" 
           class="action-modal__action-btn action-modal__action-btn--edit-btn"
         >
-        Edit
-        <span class="material-symbols-outlined">
-          edit_note
-        </span>
+          Edit
+          <span class="material-symbols-outlined">
+            edit_note
+          </span>
         </button>
   
         <button 
@@ -24,20 +24,20 @@
           class="action-modal__action-btn action-modal__action-btn--mark-resolved-btn"
           @click="markComplete(task._id, task.projectId)"
         >
-        {{ task.completed ? 'Mark as un-resolved' : 'Mark resolved' }}
-        <span class="material-symbols-outlined">
-          done
-        </span>
+          {{ task.completed ? 'Mark as un-resolved' : 'Mark resolved' }}
+          <span class="material-symbols-outlined">
+            done
+          </span>
         </button>
   
         <button 
           type="button" 
           class="action-modal__action-btn action-modal__action-btn--delete-btn"
         >
-        Delete
-        <span class="material-symbols-outlined">
-          delete
-        </span>
+          Delete
+          <span class="material-symbols-outlined">
+            delete
+          </span>
         </button>
       </section>
     </div>
