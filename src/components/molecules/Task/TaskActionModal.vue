@@ -24,11 +24,12 @@
         <button 
           type="button" 
           class="action-modal__action-btn action-modal__action-btn--mark-resolved-btn"
+          :style="task.completed ? { backgroundColor: '#ffc400' } : {}"
           @click="markComplete(task._id, task.projectId)"
         >
-          {{ task.completed ? 'Mark as un-resolved' : 'Mark resolved' }}
+          {{ task.completed ? 'Mark as un-resolved' : 'Mark as resolved' }}
           <span class="material-symbols-outlined">
-            done
+            {{ task.completed ? 'remove_done' : 'done' }}
           </span>
         </button>
   
@@ -132,7 +133,7 @@ import AppOverlay from '@/components/organisms/AppOverlay.vue';
         background-color: #00b0ff;
       }
       &--mark-resolved-btn {
-        background-color: #00e676;
+        background-color: darken(#00e676, 5%);
       }
       &--delete-btn {
         background-color: lighten(#ff3d00, 5%);

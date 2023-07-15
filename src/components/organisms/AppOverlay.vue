@@ -26,6 +26,8 @@ const modifiedClass = computed(() => props.isVisible && 'app-overlay--visible')
     right: 0;
     background-color: rgba(#000, .7);
     opacity: 0;
+    z-index: 1;
+    backdrop-filter: blur(5px);
     visibility: hidden;
     transition: opacity .25s, visibility .25s ease;
 
