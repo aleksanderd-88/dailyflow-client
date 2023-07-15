@@ -1,6 +1,6 @@
 <template>
   <div class="project-options" @click.self.stop>
-    <button type="button" class="project-options__close-btn" @click.stop="$emit('close')">
+    <button type="button" class="close-btn" @click.stop="$emit('close')">
       <span class="material-symbols-outlined">
         close
       </span>
@@ -17,16 +17,6 @@
 <style lang="scss" scoped>
   .project-options {
     position: relative;
-    
-    &__close-btn {
-      position: absolute;
-      top: .5rem;
-      right: 0;
-
-      span {
-        color: #222;
-      }
-    }
 
     &__delete-btn {
       height: 40px;

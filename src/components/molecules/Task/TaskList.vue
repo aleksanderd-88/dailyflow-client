@@ -3,33 +3,42 @@
     <TaskListItem 
       v-for="task in tasks" :key="task._id"
       :task="task"
-      @click="markComplete(task._id, task.projectId, task.completed)"
+      @click="showActionModal(task)"
+    />
+
+    <TaskActionModal 
+      :task="task" 
+      :is-visible="actionModalIsVisible" 
+      @close="actionModalIsVisible = false"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-import { type PropType } from 'vue'
+import { type PropType, ref } from 'vue'
 import TaskListItem from './TaskListItem.vue';
-import API from '@/services/api'
-import { useAPIStore } from '@/stores/api';
+import TaskActionModal from './TaskActionModal.vue';
+
+  type TaskType = {
+    _id: string, 
+    description: string, 
+    completed: boolean, 
+    projectId: string
+  }
 
   defineProps({
     tasks: {
-      type: Array as PropType<{ _id: string, description: string, completed: boolean, projectId: string }[]>,
+      type: Array as PropType<TaskType[]>,
       default: () => ([])
     }
   })
 
-  const markComplete = (id: string, projectId: string, completed = false) => {
-    let text = 'Mark as resolved?'
-    if ( completed ) 
-      text = 'Mark as un-resolved?'
+  const actionModalIsVisible = ref(false)
+  const task = ref<TaskType>({} as TaskType)
 
-    if ( !confirm(text) ) return
-    
-    API.markComplete(id).then(() => useAPIStore().getProject(projectId))
-    .catch((err) => console.log(err))
+  const showActionModal = (param: TaskType) => {
+    task.value = param
+    actionModalIsVisible.value = true
   }
 
 </script>
