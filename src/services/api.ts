@@ -21,6 +21,9 @@ export default {
   getProject(id: string): Promise<AxiosResponse> {
     return client.get(`/projects/${ id }/get`)
   },
+  deleteProject(id: string): Promise<AxiosResponse> {
+    return client.delete(`/projects/${ id }/delete`)
+  },
   // Tasks
   createTask(params: ParamType) {
     return client.post('/tasks/create', params)

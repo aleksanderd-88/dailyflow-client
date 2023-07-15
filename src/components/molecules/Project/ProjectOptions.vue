@@ -6,7 +6,7 @@
       </span>
     </button>
 
-    <button type="button" class="project-options__delete-btn" @click.stop>Delete</button>
+    <button type="button" class="project-options__delete-btn" @click.stop="$emit('delete')">Delete</button>
   </div>
 </template>
 

@@ -28,12 +28,23 @@ export const useAPIStore = defineStore('api', () => {
     .finally(() => useLoadingStore().setLoading(false))
   } 
 
+  const deleteProject = (id: string) => {
+    useLoadingStore().setLoading(true)
+    return API.deleteProject(id).then(() => listProjects())
+    .catch(error => console.log(error))
+    .finally(() => useLoadingStore().setLoading(false))
+  } 
+
   const createTask = (params: { data: Record<string, unknown>}) => {
     useLoadingStore().setLoading(true)
     return API.createTask(params).then(({ data }) => getProject(data.projectId))
     .catch(error => console.log(error))
     .finally(() => useLoadingStore().setLoading(false))
   } 
+
+  const clearData = () => {
+    project.value = { name: '', _id: '', tasks: [] }
+  }
 
   const items = computed(() => projects.value)
   const item = computed(() => project.value)
@@ -42,7 +53,9 @@ export const useAPIStore = defineStore('api', () => {
     createProject,
     listProjects,
     getProject,
+    deleteProject,
     createTask,
+    clearData,
     items,
     item
   }

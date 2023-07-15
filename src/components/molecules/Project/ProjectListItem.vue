@@ -12,7 +12,8 @@
     <ProjectOptions 
       class="project-item__options" 
       :class="modifiedClass"
-      @close="optionIsVisible = false" 
+      @close="optionIsVisible = false"
+      @delete="deleteProject(project._id)" 
     />
 
     <div>
@@ -30,6 +31,7 @@
 import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import ProjectOptions from '@/components/molecules/Project/ProjectOptions.vue'
+import { useAPIStore } from '@/stores/api';
 
   const props = defineProps({
     project: {
@@ -58,6 +60,16 @@ import ProjectOptions from '@/components/molecules/Project/ProjectOptions.vue'
   }
 
   const showOptions = () => optionIsVisible.value = true
+
+  const deleteProject = (id: string) => {
+    if ( !id ) 
+      return console.log('No id was specified')
+
+    if ( !confirm('All related tasks will also be removed. Continue?') ) return
+
+    console.log(id);
+    useAPIStore().deleteProject(id).then(() => optionIsVisible.value = false)
+  }
 </script>
 
 <style lang="scss" scoped>
