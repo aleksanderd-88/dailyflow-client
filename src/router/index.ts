@@ -20,8 +20,8 @@ const router = createRouter({
       name: 'projectOverview',
       component: () => import('@/pages/ProjectOverview.vue'),
       beforeEnter: (to, from) => {
-        useAPIStore().getProject(to.params?.id.toString()).then(() => {
-          setPageTitle('Overview')
+        useAPIStore().getProject(to.params?.id.toString()).then((data) => {
+          setPageTitle(`${ data?.name }`)
           return true
         })
       }

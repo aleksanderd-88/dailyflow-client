@@ -23,7 +23,10 @@ export const useAPIStore = defineStore('api', () => {
 
   const getProject = (id: string) => {
     useLoadingStore().setLoading(true)
-    return API.getProject(id).then(({ data }) => project.value = data)
+    return API.getProject(id).then(({ data }) => {
+      project.value = data
+      return data
+    })
     .catch(error => console.log(error))
     .finally(() => useLoadingStore().setLoading(false))
   } 
