@@ -93,10 +93,10 @@ const handleSubmit = () => {
     z-index: 999;
     border-radius: 5px 5px 0 0;
     background-color: #fff;
-    transform: translateY(100%);
     visibility: hidden;
     opacity: 0;
-    transition: transform .25s, opacity .25s, visibility .25s ease;
+    transform: translate(0, 100%);
+    transition: transform .25s, visibility .25s, opacity .25s ease;
 
     &__row {
       display: flex;
@@ -118,6 +118,7 @@ const handleSubmit = () => {
       outline: none;
       border-bottom: 1px solid #ccc;
       transition: border .25s ease;
+      padding-right: 80px;
 
       &:focus {
         border-color: #2D383D;
@@ -136,10 +137,26 @@ const handleSubmit = () => {
       transform: translateY(-50%);
     }
 
+    @media (min-width: 768px) {
+      top: 50%;
+      left: 50%;
+      right: unset;
+      bottom: unset;
+      width: 400px;
+      padding: 2rem;
+      border-radius: 3px;
+      transform-origin: center;
+      transform: translate(-50%, 2px);
+    }
+
     &--visible {
-      transform: translateY(0);
+      transform: translate(0, 0);
       visibility: visible;
       opacity: 1;
+
+      @media (min-width: 768px) {
+        transform: translate(-50%, -50%);
+      }
     }
   }
 </style>@/stores/api
