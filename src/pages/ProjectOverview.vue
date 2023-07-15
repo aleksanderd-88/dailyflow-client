@@ -129,6 +129,10 @@ import TaskList from '@/components/molecules/Task/TaskList.vue'
       span {
         font-size: 3rem;
       }
+
+      @media (min-width: 1024px) {
+        padding-left: 4rem;
+      }
     }
 
     &__content {
@@ -167,6 +171,11 @@ import TaskList from '@/components/molecules/Task/TaskList.vue'
       justify-content: center;
       background-color: #2D383D;
       box-shadow: 0 7px 12px -4px rgba(#000, .5);
+
+      @media (min-width: 1024px) {
+        right: 3rem;
+        bottom: 2rem;
+      }
     }
   }
 </style>

@@ -58,6 +58,11 @@ const createProject = (name: string) => {
       justify-content: center;
       background-color: #2D383D;
       box-shadow: 0 7px 12px -4px rgba(#000, .5);
+
+      @media (min-width: 1024px) {
+        right: 3rem;
+        bottom: 2rem;
+      }
     }
   }
 </style>
