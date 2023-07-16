@@ -7,7 +7,7 @@ export const useLoadingStore = defineStore('app', () => {
 
   const setLoading = (value: boolean) => is_loading.value = value
 
-  const isLoading = computed(() => is_loading)
+  const isLoading = computed(() => is_loading.value)
   
   return {
     setLoading,
