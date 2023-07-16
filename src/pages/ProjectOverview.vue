@@ -89,7 +89,7 @@ import TaskList from '@/components/molecules/Task/TaskList.vue'
 
   const label = computed(() => isEditMode.value ? 'Edit description' : 'Give your task a description')
 
-  const isLoading = computed(() => useLoadingStore().isLoading.value)
+  const isLoading = computed(() => useLoadingStore().isLoading)
 
   const project = computed(() => useAPIStore().item)
   const tasks = computed(() => project.value?.tasks.filter(task => !task.completed) || [])
