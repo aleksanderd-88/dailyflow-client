@@ -14,7 +14,7 @@
       v-if="!task.completed"
       type="button" 
       class="task-item__action-btn" 
-      @click.stop="taskBookmarked = !taskBookmarked">
+      @click.stop="bookmark(task)">
 
       <span class="material-symbols-outlined">
         grade
@@ -25,21 +25,30 @@
 </template>
 
 <script setup lang="ts">
-import { ref, type PropType, computed } from 'vue'
+import { type PropType, computed } from 'vue'
+import { useBookmarkStore } from '@/stores/api/bookmark';
+import { useAPIStore } from '@/stores/api';
+
+  type TaskType = {
+    _id: string, 
+    description: string, 
+    completed: boolean, 
+    projectId: string
+    isBookmarked: boolean
+  }
+
   const props = defineProps({
     task: {
-      type: Object as PropType<{ _id: string, description: string, completed: boolean }>,
+      type: Object as PropType<TaskType>,
       default: () => ({})
     }
   })
-
-  const taskBookmarked = ref(false)
 
   const modifiedClass = computed(() => {
 
     let className = ''
 
-    if ( taskBookmarked.value ) {
+    if ( props.task.isBookmarked ) {
       className += 'task-item--bookmark'
     }
     if ( props.task.completed ) {
@@ -47,6 +56,25 @@ import { ref, type PropType, computed } from 'vue'
     }
     return className
   })
+
+  const bookmark = (task: TaskType) => {
+
+    if ( task.isBookmarked ) {
+      return useBookmarkStore().deleteBookmark(task._id)
+        .then(() => useAPIStore().getProject(task.projectId))
+    }
+
+    const data = {
+      description: task.description,
+      projectId: task.projectId,
+      isBookmarked: true,
+      taskId: task._id,
+      markedAsRead: true
+    }
+
+    useBookmarkStore().createBookmark({ data })
+      .then(() => useAPIStore().getProject(task.projectId))
+  }
 </script>
 
 <style lang="scss" scoped>

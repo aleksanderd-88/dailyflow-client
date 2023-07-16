@@ -64,7 +64,8 @@ import TaskList from '@/components/molecules/Task/TaskList.vue'
     _id: string, 
     description: string, 
     completed: boolean, 
-    projectId: string
+    projectId: string,
+    isBookmarked: boolean
   }
 
   const task = ref({} as TaskType)

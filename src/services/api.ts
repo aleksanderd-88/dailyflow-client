@@ -36,5 +36,12 @@ export default {
   },
   deleteTask(id: string) {
     return client.delete(`/tasks/${ id }/delete`)
-  }
+  },
+  // Bookmarks
+  createBookmark(params: ParamType) {
+    return client.post('/bookmarks/create', params)
+  },
+  deleteBookmark(id: string) {
+    return client.delete(`/bookmarks/${ id }/delete`)
+  },
 }

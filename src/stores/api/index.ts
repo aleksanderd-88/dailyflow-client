@@ -8,6 +8,7 @@ type TaskType = {
   description: string, 
   completed: boolean, 
   projectId: string
+  isBookmarked: boolean
 }
 
 export const useAPIStore = defineStore('api', () => {

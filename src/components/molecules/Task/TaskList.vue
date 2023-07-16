@@ -24,7 +24,8 @@ import TaskActionModal from './TaskActionModal.vue';
     _id: string, 
     description: string, 
     completed: boolean, 
-    projectId: string
+    projectId: string,
+    isBookmarked: boolean
   }
 
   defineProps({
