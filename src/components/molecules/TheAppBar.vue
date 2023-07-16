@@ -8,6 +8,10 @@
             <span class="material-symbols-outlined material-symbols-outlined--medium">
               notifications
             </span>
+
+            <span class="app-bar__counter" v-if="bookmarkCount">
+              {{ bookmarkCount }}
+            </span>
           </button>  
         </section>
 
@@ -17,7 +21,10 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
+import { useBookmarkStore } from '@/stores/api/bookmark';
 
+  const bookmarkCount = computed(() => useBookmarkStore().bookmarkCount)
 </script>
 
 <style lang="scss" scoped>
@@ -34,6 +41,27 @@
     }
     &__actions {
       margin-left: auto;
+    }
+
+    &__action-btn {
+      position: relative;
+    }
+
+    &__counter {
+      position: absolute;
+      top: -5px;
+      right: 0px;
+      width: 20px;
+      height: 20px;
+      padding: 5px;
+      display: flex;
+      align-items: center;
+      border-radius: 50%;
+      justify-content: center;
+      font-size: .7rem;
+      color: #fff;
+      border: 1px solid #fff;
+      background-color: lighten(#ff3d00, 5%);
     }
   }
 </style>

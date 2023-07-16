@@ -44,4 +44,7 @@ export default {
   deleteBookmark(id: string) {
     return client.delete(`/bookmarks/${ id }/delete`)
   },
+  listBookmark() {
+    return client.get('/bookmarks/list')
+  }
 }

@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import OverView from '@/pages/OverView.vue'
 import { useAPIStore } from '@/stores/api'
+import { useBookmarkStore } from '@/stores/api/bookmark'
 
 const setPageTitle = (title: string) => {
   document.title = `DailyFlow \u2022 ${ title }`
@@ -27,6 +28,11 @@ const router = createRouter({
       }
     }
   ]
+})
+
+router.afterEach((to, from) => {
+  useBookmarkStore().listBookmark()
+  return true
 })
 
 export default router
