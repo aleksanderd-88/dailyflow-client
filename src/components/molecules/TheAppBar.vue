@@ -4,27 +4,35 @@
       <main class="app-bar__content">
 
         <section class="app-bar__actions">
-          <button type="button" class="app-bar__action-btn">
+          <button type="button" class="app-bar__action-btn" @click.stop="bookmarkListVisible = true">
             <span class="material-symbols-outlined material-symbols-outlined--medium">
               notifications
             </span>
 
-            <span class="app-bar__counter" v-if="bookmarkCount">
+            <span class="app-bar__counter" v-if="bookmarkCount > 0">
               {{ bookmarkCount }}
             </span>
           </button>  
-        </section>
 
+        </section>
+        
+        <BookmarkList 
+          v-if="bookmarkListVisible" 
+          @close="bookmarkListVisible = false"
+        />
       </main>
+
     </nav>
   </header>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useBookmarkStore } from '@/stores/api/bookmark';
+import BookmarkList from './Bookmark/BookmarkList.vue';
 
-  const bookmarkCount = computed(() => useBookmarkStore().bookmarkCount)
+  const bookmarkListVisible = ref(false)
+  const bookmarkCount = computed(() => useBookmarkStore().itemCount)
 </script>
 
 <style lang="scss" scoped>
@@ -38,6 +46,7 @@ import { useBookmarkStore } from '@/stores/api/bookmark';
       max-width: 1600px;
       margin: auto;
       height: 60px;
+      position: relative;
     }
     &__actions {
       margin-left: auto;
