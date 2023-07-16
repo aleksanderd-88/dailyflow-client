@@ -11,7 +11,6 @@
     </div>
     
     <button
-      v-if="!task.completed"
       type="button" 
       class="task-item__action-btn" 
       @click.stop="bookmark(task)">
