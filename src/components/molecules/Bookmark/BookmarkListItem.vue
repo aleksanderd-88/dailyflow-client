@@ -46,6 +46,7 @@ import { useRouter } from 'vue-router';
 <style lang="scss" scoped>
   .bookmark-item {
     display: flex;
+    padding: 0;
     justify-content: space-between;
     align-items: center;
 
