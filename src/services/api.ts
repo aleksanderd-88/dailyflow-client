@@ -1,7 +1,7 @@
 import axios, { type AxiosResponse } from 'axios'
 
 const client = axios.create({
-  baseURL: `${import.meta.env.VITE_API_URL}`,
+  baseURL: `${import.meta.env.VITE_API_TEST_URL}`,
   withCredentials: false,
   timeout: 60000
 })
