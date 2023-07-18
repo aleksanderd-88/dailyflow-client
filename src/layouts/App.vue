@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import AppLoader from '@/components/molecules/AppLoader.vue';
+import AppLoader from '@/components/atoms/AppLoader.vue';
 import TheAppBar from '@/components/molecules/TheAppBar.vue'
 
 </script>

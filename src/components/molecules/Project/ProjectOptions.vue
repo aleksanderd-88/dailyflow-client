@@ -1,17 +1,13 @@
 <template>
   <div class="project-options" @click.self.stop>
-    <button type="button" class="close-btn" @click.stop="$emit('close')">
-      <span class="material-symbols-outlined">
-        close
-      </span>
-    </button>
+    <AppCloseButton @close="$emit('close')" />
 
     <button type="button" class="project-options__delete-btn" @click.stop="$emit('delete')">Delete</button>
   </div>
 </template>
 
 <script setup lang="ts">
-
+import AppCloseButton from '@/components/atoms/AppCloseButton.vue'
 </script>
 
 <style lang="scss" scoped>

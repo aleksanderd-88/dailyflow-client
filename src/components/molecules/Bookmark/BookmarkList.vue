@@ -1,10 +1,6 @@
 <template>
   <div class="bookmark-list" :class="modifiedClass">
-    <button type="button" class="close-btn" @click.stop="$emit('close')">
-      <span class="material-symbols-outlined">
-        close
-      </span>
-    </button>
+    <AppCloseButton @close="$emit('close')" />
 
     <h1 class="bookmark-list__headline">Tasks</h1>
 
@@ -25,6 +21,7 @@
 import BookmarkListItem from './BookmarkListItem.vue';
 import { useBookmarkStore } from '@/stores/api/bookmark';
 import { computed } from 'vue';
+import AppCloseButton from '@/components/atoms/AppCloseButton.vue'
 
 const props = defineProps({
   isVisible: {
