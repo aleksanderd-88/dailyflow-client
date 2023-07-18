@@ -67,7 +67,6 @@ import { useAPIStore } from '@/stores/api';
 
     if ( !confirm('All related tasks will also be removed. Continue?') ) return
 
-    console.log(id);
     useAPIStore().deleteProject(id).then(() => optionIsVisible.value = false)
   }
 </script>
