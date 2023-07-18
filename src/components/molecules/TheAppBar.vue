@@ -4,7 +4,7 @@
       <main class="app-bar__content">
 
         <section class="app-bar__actions">
-          <button type="button" class="app-bar__action-btn" @click.stop="bookmarkListVisible = true">
+          <button type="button" class="app-bar__action-btn" @click.stop="bookmarkListVisible = !bookmarkListVisible">
             <span class="material-symbols-outlined material-symbols-outlined--medium">
               notifications
             </span>
@@ -17,7 +17,7 @@
         </section>
         
         <BookmarkList 
-          v-if="bookmarkListVisible" 
+          :is-visible="bookmarkListVisible" 
           @close="bookmarkListVisible = false"
         />
       </main>
