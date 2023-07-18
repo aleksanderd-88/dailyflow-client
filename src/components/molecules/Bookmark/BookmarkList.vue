@@ -6,7 +6,7 @@
       </span>
     </button>
 
-    <h1 class="bookmark-list__headline">Bookmarks</h1>
+    <h1 class="bookmark-list__headline">Tasks</h1>
 
     <section class="bookmark-list__items" v-if="bookmarkCount > 0">
       <BookmarkListItem 

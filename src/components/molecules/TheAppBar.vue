@@ -6,7 +6,7 @@
         <section class="app-bar__actions">
           <button type="button" class="app-bar__action-btn" @click.stop="bookmarkListVisible = !bookmarkListVisible">
             <span class="material-symbols-outlined material-symbols-outlined--medium">
-              notifications
+              notification_important
             </span>
 
             <span class="app-bar__counter" v-if="bookmarkCount > 0">
