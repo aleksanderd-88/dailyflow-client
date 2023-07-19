@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 import API from '@/services/api'
 import { useLoadingStore } from "../app/loading";
+import { useFeedbackStore } from "../app/feedback";
 
 type TaskType = {
   _id: string, 
@@ -17,8 +18,14 @@ export const useAPIStore = defineStore('api', () => {
 
   const createProject = async (params: { data: Record<string, unknown>}) => {
     useLoadingStore().setLoading(true)
-    return API.createProject(params).then(() => listProjects())
-    .catch(err => console.log(err))
+    return API.createProject(params).then(() => {
+      listProjects()
+      useFeedbackStore().setFeedbackVisibility(true, 'Project created.')
+    })
+    .catch(err => {
+      console.log(err)
+      useFeedbackStore().setFeedbackVisibility(true, 'Something went wrong ...', 'error')
+    })
     .finally(() => useLoadingStore().setLoading(false))
   }
 
@@ -41,29 +48,53 @@ export const useAPIStore = defineStore('api', () => {
 
   const deleteProject = (id: string) => {
     useLoadingStore().setLoading(true)
-    return API.deleteProject(id).then(() => listProjects())
-    .catch(error => console.log(error))
+    return API.deleteProject(id).then(() => {
+      listProjects() 
+      useFeedbackStore().setFeedbackVisibility(true, 'Project deleted.')
+    })
+    .catch(error => {
+      console.log(error)
+      useFeedbackStore().setFeedbackVisibility(true, 'Something went wrong ...', 'error')
+    })
     .finally(() => useLoadingStore().setLoading(false))
   } 
 
   const createTask = (params: { data: Record<string, unknown>}) => {
     useLoadingStore().setLoading(true)
-    return API.createTask(params).then(({ data }) => getProject(data.projectId))
-    .catch(error => console.log(error))
+    return API.createTask(params).then(({ data }) => {
+      getProject(data.projectId)
+      useFeedbackStore().setFeedbackVisibility(true, 'Task created.')
+    })
+    .catch(error => {
+      console.log(error)
+      useFeedbackStore().setFeedbackVisibility(true, 'Something went wrong ...', 'error')
+    })
     .finally(() => useLoadingStore().setLoading(false))
   } 
 
   const editTask = (id: string, params: { data: Record<string, unknown>}) => {
     useLoadingStore().setLoading(true)
-    return API.editTask(id, params).then(() => getProject(project.value?._id.toString() as string))
-    .catch(error => console.log(error))
+    return API.editTask(id, params).then(() => {
+      getProject(project.value?._id.toString() as string)
+      useFeedbackStore().setFeedbackVisibility(true, 'Task edited.')
+    })
+    .catch(error => {
+      console.log(error)
+      useFeedbackStore().setFeedbackVisibility(true, 'Something went wrong ...', 'error')
+    })
     .finally(() => useLoadingStore().setLoading(false))
   } 
   
   const deleteTask = (id: string) => {
     useLoadingStore().setLoading(true)
-    return API.deleteTask(id).then(() => getProject(project.value?._id.toString() as string))
-    .catch(error => console.log(error))
+    return API.deleteTask(id).then(() => {
+      getProject(project.value?._id.toString() as string)
+      useFeedbackStore().setFeedbackVisibility(true, 'Task deleted.')
+    })
+    .catch(error => {
+      console.log(error)
+      useFeedbackStore().setFeedbackVisibility(true, 'Something went wrong ...', 'error')
+    })
     .finally(() => useLoadingStore().setLoading(false))
   } 
 

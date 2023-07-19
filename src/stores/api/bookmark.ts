@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import API from '@/services/api'
 import { useLoadingStore } from "../app/loading";
 import { computed, ref } from "vue";
+import { useFeedbackStore } from "../app/feedback";
 
 type BookmarkType = {
   description: string
@@ -19,16 +20,28 @@ export const useBookmarkStore = defineStore('bookmark', () => {
   const createBookmark = (params: { data: Record<string, unknown> } ) => {
     useLoadingStore().setLoading(true)
     return API.createBookmark(params)
-      .then(() => listBookmark())
-      .catch(err => console.log(err))
+      .then(() => {
+        listBookmark()
+        useFeedbackStore().setFeedbackVisibility(true, 'Bookmark added.')
+      })
+      .catch(error => {
+        console.log(error)
+        useFeedbackStore().setFeedbackVisibility(true, 'Something went wrong ...', 'error')
+      })
       .finally(() => useLoadingStore().setLoading(false))
   }
 
   const deleteBookmark = (id: string) => {
     useLoadingStore().setLoading(true)
     return API.deleteBookmark(id)
-      .then(() => listBookmark())
-      .catch(err => console.log(err))
+      .then(() => {
+        listBookmark()
+        useFeedbackStore().setFeedbackVisibility(true, 'Bookmark removed.')
+      })
+      .catch(error => {
+        console.log(error)
+        useFeedbackStore().setFeedbackVisibility(true, 'Something went wrong ...', 'error')
+      })
       .finally(() => useLoadingStore().setLoading(false))
   }
 

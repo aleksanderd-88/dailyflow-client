@@ -1,5 +1,10 @@
 <template>
-  <button type="button" class="close-btn" @click.stop="$emit('close')">
+  <button 
+    type="button" 
+    class="close-btn" 
+    :class="modifiedClass" 
+    @click.stop="$emit('close')"
+  >
     <span class="material-symbols-outlined">
       close
     </span>
@@ -7,7 +12,16 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 
+  const props = defineProps({
+    light: {
+      type: Boolean,
+      default: false
+    }
+  })
+
+  const modifiedClass = computed(() => props.light && 'close-btn--theme-light')
 </script>
 
 <style lang="scss" scoped>
@@ -18,6 +32,12 @@
 
   span {
     color: #222;
+  }
+
+  &--theme-light {
+    span {
+      color: #fff;
+    }
   }
 }
 </style>
