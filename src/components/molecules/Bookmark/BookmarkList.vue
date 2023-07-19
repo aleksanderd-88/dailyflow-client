@@ -13,7 +13,7 @@
       />
     </section>
 
-    <p class="bookmark-list_alt-text" v-else>No bookmarks</p>
+    <p class="bookmark-list_alt-text" v-else>No task(s)</p>
   </div>
 </template>
 
