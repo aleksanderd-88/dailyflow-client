@@ -3,6 +3,7 @@ import { computed, ref } from "vue";
 import API from '@/services/api'
 import { useLoadingStore } from "../app/loading";
 import { useFeedbackStore } from "../app/feedback";
+import { useBookmarkStore } from "./bookmark";
 
 type TaskType = {
   _id: string, 
@@ -49,7 +50,8 @@ export const useAPIStore = defineStore('api', () => {
   const deleteProject = (id: string) => {
     useLoadingStore().setLoading(true)
     return API.deleteProject(id).then(() => {
-      listProjects() 
+      listProjects()
+      useBookmarkStore().listBookmark()
       useFeedbackStore().setFeedbackVisibility(true, 'Project deleted.')
     })
     .catch(error => {
@@ -89,6 +91,7 @@ export const useAPIStore = defineStore('api', () => {
     useLoadingStore().setLoading(true)
     return API.deleteTask(id).then(() => {
       getProject(project.value?._id.toString() as string)
+      useBookmarkStore().listBookmark()
       useFeedbackStore().setFeedbackVisibility(true, 'Task deleted.')
     })
     .catch(error => {
