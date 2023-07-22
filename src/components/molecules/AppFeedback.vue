@@ -31,7 +31,7 @@ const closeFeedback = () => useFeedbackStore().closeFeedback()
 <style lang="scss" scoped>
   .app-feedback {
     position: fixed;
-    top: 5rem;
+    bottom: 1rem;
     right: 0;
     left: 50%;
     width: 95%;
@@ -59,6 +59,8 @@ const closeFeedback = () => useFeedbackStore().closeFeedback()
       max-width: 400px;
       left: unset;
       right: 1rem;
+      bottom: unset;
+      top: 5rem;
       transform: translate(0, 2px);
     }
     
