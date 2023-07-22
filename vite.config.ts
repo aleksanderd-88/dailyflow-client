@@ -21,7 +21,14 @@ export default defineConfig({
         description: 'Keep track on daily tasks',
         theme_color: '#2D383D',
         background_color: '#2D383D',
-        display: 'standalone'
+        display: 'standalone',
+        icons: [
+          {
+            src: 'img/icons/icon-144px144.png',
+            sizes: '144x144',
+            type: 'image/png'
+          }
+        ]
       }
     })
   ],
