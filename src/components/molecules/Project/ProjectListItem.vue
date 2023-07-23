@@ -22,7 +22,7 @@
         {{ project.name }}
       </h1>
       <p class="project-item__task-count" v-if="taskCount">
-        {{ `${ taskCount } ${ taskCount > 0 ? 'items' : 'item'}` }}
+        {{ counter }}
       </p>
     </div>
   </button>
@@ -50,6 +50,7 @@ import { useAPIStore } from '@/stores/api';
   const optionIsVisible = ref(false)
 
   const taskCount = computed(() => props.project?.tasks?.length)
+  const counter = computed(() => `${ taskCount.value } ${ taskCount.value > 1 ? 'items' : 'item'}`)
 
   const modifiedClass = computed(() => optionIsVisible.value && 'project-item__options--visible')
 
