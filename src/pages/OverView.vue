@@ -7,7 +7,10 @@
 
       <template v-else>
         <h1 class="l-base__headline">My list</h1>
-        <ProjectList :projects="projects" />
+        <ProjectList 
+          :projects="projects" 
+          @edit="setEditMode($event)"
+        />
       </template>
     </main>
 
@@ -20,7 +23,9 @@
       
       <AppForm 
         :is-visible="searchbarIsVisible"
-        label="Name your project" 
+        :editMode="isEditMode" 
+        :label="label" 
+        :input="project.name"
         @close="searchbarIsVisible = false"
         @submit="createProject($event)"
       />
@@ -30,24 +35,48 @@
 
 <script setup lang="ts">
 import AppForm from '@/components/molecules/AppForm.vue';
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import ProjectList from '@/components/molecules/Project/ProjectList.vue';
 import { useAPIStore } from '@/stores/api'
 import { onBeforeRouteLeave } from 'vue-router';
 
+type ProjectType = {
+  _id: string
+  name: string
+}
+
 const searchbarIsVisible = ref(false)
+const isEditMode = ref(false)
+const project = ref({} as ProjectType)
 
 const projects = computed(() => useAPIStore().items)
 const projectListIsEmpty = computed(() => !projects.value?.length)
+const label = computed(() => isEditMode.value ? 'Edit project name' : 'Name your project')
 
 useAPIStore().listProjects()
+
+watch(() => searchbarIsVisible.value, (val) => {
+  if ( !val ) {
+    isEditMode.value = false
+    project.value = {} as ProjectType
+  }
+})
 
 const createProject = (name: string) => {
   if ( !name ) return
 
-  const data = { name: name }
+  const data = {
+    id: project.value?._id,
+    name
+  }
+
+  if ( isEditMode.value )
+    return useAPIStore().editProject(project.value._id?.toString(), { data })
+
   useAPIStore().createProject({ data })
 }
+
+const modifiedClass = computed(() => projectListIsEmpty?.value && 'overview--shape-bg')
 
 onBeforeRouteLeave((to, from) => {
   if ( searchbarIsVisible.value ) {
@@ -56,7 +85,12 @@ onBeforeRouteLeave((to, from) => {
   }
 })
 
-const modifiedClass = computed(() => projectListIsEmpty?.value && 'overview--shape-bg')
+const setEditMode = (param: ProjectType) => {
+  searchbarIsVisible.value = true
+  project.value = param
+  isEditMode.value = true
+}
+
 </script>
 
 <style lang="scss" scoped>

@@ -15,6 +15,9 @@ export default {
   createProject(params: ParamType) {
     return client.post('/projects/create', params)
   },
+  editProject(id: string, params: ParamType) {
+    return client.patch(`/projects/${ id }/edit`, params)
+  },
   listProjects(): Promise<AxiosResponse> {
     return client.get('/projects/list')
   },

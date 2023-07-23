@@ -30,6 +30,19 @@ export const useAPIStore = defineStore('api', () => {
     .finally(() => useLoadingStore().setLoading(false))
   }
 
+  const editProject = async (id: string, params: { data: Record<string, unknown>}) => {
+    useLoadingStore().setLoading(true)
+    return API.editProject(id, params).then(() => {
+      listProjects()
+      useFeedbackStore().setFeedbackVisibility(true, 'Project edited.')
+    })
+    .catch(err => {
+      console.log(err)
+      useFeedbackStore().setFeedbackVisibility(true, 'Something went wrong ...', 'error')
+    })
+    .finally(() => useLoadingStore().setLoading(false))
+  }
+
   const listProjects = () => {
     useLoadingStore().setLoading(true)
     API.listProjects().then(({ data }) => projects.value = data)
@@ -118,6 +131,7 @@ export const useAPIStore = defineStore('api', () => {
     editTask,
     clearData,
     items,
-    item
+    item,
+    editProject
   }
 })

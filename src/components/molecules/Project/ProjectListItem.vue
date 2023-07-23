@@ -13,6 +13,7 @@
       class="project-item__options" 
       :class="modifiedClass"
       @close="optionIsVisible = false"
+      @edit="editProject({ _id: project._id, name: project.name })" 
       @delete="deleteProject(project._id)" 
     />
 
@@ -40,6 +41,10 @@ import { useAPIStore } from '@/stores/api';
       default: () => ({})
     }
   })
+  
+  const emit = defineEmits<{
+    (event: 'edit', params: { _id: string, name: string }): void
+  }>()
 
   const router = useRouter()
   const optionIsVisible = ref(false)
@@ -68,6 +73,11 @@ import { useAPIStore } from '@/stores/api';
     if ( !confirm('All related tasks will also be removed. Continue?') ) return
 
     useAPIStore().deleteProject(id).then(() => optionIsVisible.value = false)
+  }
+
+  const editProject = (params: { _id: string, name: string }) => {
+    emit('edit', params)
+    optionIsVisible.value = false
   }
 </script>
 

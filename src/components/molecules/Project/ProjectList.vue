@@ -3,7 +3,8 @@
     <ProjectListItem 
       v-for="project in projects" 
       :key="project._id" 
-      :project="project" 
+      :project="project"
+      @edit="$emit('edit', $event)" 
     />
   </div>
 </template>
