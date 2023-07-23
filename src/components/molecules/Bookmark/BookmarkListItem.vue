@@ -36,7 +36,8 @@ import { useRouter } from 'vue-router';
     router.push({
       name: 'projectOverview',
       params: {
-        id: props.bookmark.projectId
+        id: props.bookmark.projectId,
+        taskId: props.bookmark.taskId
       }
     })
     emit('close')

@@ -24,9 +24,10 @@
 </template>
 
 <script setup lang="ts">
-import { type PropType, computed } from 'vue'
+import { type PropType, computed, ref, watch } from 'vue'
 import { useBookmarkStore } from '@/stores/api/bookmark';
 import { useAPIStore } from '@/stores/api';
+import { useRoute } from 'vue-router';
 
   type TaskType = {
     _id: string, 
@@ -43,6 +44,20 @@ import { useAPIStore } from '@/stores/api';
     }
   })
 
+  const route = useRoute()
+  const isHighlighted = ref(false)
+
+  watch(() => route.params.taskId, val => {
+    if (val && props.task._id === val) {
+      isHighlighted.value = true
+
+      const timerId = setTimeout(() => {
+        isHighlighted.value = false
+        clearTimeout(timerId)
+      }, 2500);
+    }
+  }, { immediate: true })
+
   const modifiedClass = computed(() => {
 
     let className = ''
@@ -52,6 +67,9 @@ import { useAPIStore } from '@/stores/api';
     }
     if ( props.task.completed ) {
       className += ' task-item--complete'
+    }
+    if ( isHighlighted.value ) {
+      className += ' task-item--highlight'
     }
     return className
   })
@@ -83,7 +101,9 @@ import { useAPIStore } from '@/stores/api';
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 1rem;
+    padding: 10px 1rem;
+    border-radius: 3px;
+    transition: background-color .25s ease;
 
     &__description {
       font-size: .8rem;
@@ -102,6 +122,10 @@ import { useAPIStore } from '@/stores/api';
         color: #ccc;
         text-decoration: line-through;
       }
+    }
+
+    &--highlight {
+      background-color: rgba(#C4ACFC, .15);
     }
   }
 </style>
