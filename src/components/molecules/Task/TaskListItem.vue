@@ -27,7 +27,7 @@
 import { type PropType, computed, ref, watch } from 'vue'
 import { useBookmarkStore } from '@/stores/api/bookmark';
 import { useAPIStore } from '@/stores/api';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
   type TaskType = {
     _id: string, 
@@ -45,6 +45,7 @@ import { useRoute } from 'vue-router';
   })
 
   const route = useRoute()
+  const router = useRouter()
   const isHighlighted = ref(false)
 
   watch(() => route.params.taskId, val => {
@@ -78,7 +79,10 @@ import { useRoute } from 'vue-router';
 
     if ( task.isBookmarked ) {
       return useBookmarkStore().deleteBookmark(task._id)
-        .then(() => useAPIStore().getProject(task.projectId))
+        .then(() => {
+          router.replace({ name: 'projectOverview', params: { taskId: '' } })
+          useAPIStore().getProject(task.projectId)
+        })
     }
 
     const data = {
