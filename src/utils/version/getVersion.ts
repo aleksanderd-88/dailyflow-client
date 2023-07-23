@@ -1,0 +1,1 @@
+export const appVersion = () => window.__APP_VERSION__
