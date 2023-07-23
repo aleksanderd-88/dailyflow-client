@@ -1,1 +1,1 @@
-export const appVersion = () => window.__APP_VERSION__
+export const appVersion = () => APP_VERSION
