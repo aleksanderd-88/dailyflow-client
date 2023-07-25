@@ -50,6 +50,7 @@ import { useRouter } from 'vue-router';
     padding: 0;
     justify-content: space-between;
     align-items: center;
+    text-align: left;
 
     &__description {
       font-weight: 200;

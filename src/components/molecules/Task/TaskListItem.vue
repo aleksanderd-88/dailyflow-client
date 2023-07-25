@@ -107,6 +107,7 @@ import { useRoute, useRouter } from 'vue-router';
     align-items: center;
     padding: 10px 1rem;
     border-radius: 3px;
+    text-align: left;
     transition: background-color .25s ease;
 
     &__description {
