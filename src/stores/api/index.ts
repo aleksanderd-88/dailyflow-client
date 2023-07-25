@@ -124,7 +124,7 @@ export const useAPIStore = defineStore('api', () => {
   } 
 
   const clearData = () => {
-    project.value = { name: '', _id: '', tasks: [] }
+    project.value = { name: '', _id: '', tasks: [], createdAt: '' }
   }
 
   const items = computed(() => projects.value)
