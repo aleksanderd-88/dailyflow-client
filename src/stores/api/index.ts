@@ -13,9 +13,18 @@ type TaskType = {
   isBookmarked: boolean
 }
 
+type ProjectType = { 
+  name: string, 
+  _id: string, 
+  tasks: TaskType[], 
+  createdAt: string 
+}
+
+type ProjectsType = ProjectType[]
+
 export const useAPIStore = defineStore('api', () => {
-  const projects = ref<{ name: string, _id: string, tasks: TaskType[] }[]>([])
-  const project = ref<{ name: string, _id: string, tasks: TaskType[] }>()
+  const projects = ref<ProjectsType>([])
+  const project = ref<ProjectType>()
 
   const createProject = async (params: { data: Record<string, unknown>}) => {
     useLoadingStore().setLoading(true)
