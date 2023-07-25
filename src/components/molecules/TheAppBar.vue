@@ -6,11 +6,11 @@
         <section class="app-bar__actions">
           <button type="button" class="app-bar__action-btn" @click.stop="bookmarkListVisible = !bookmarkListVisible">
             <span class="material-symbols-outlined material-symbols-outlined--medium">
-              notifications
+              notification_important
             </span>
 
             <span class="app-bar__counter" v-if="bookmarkCount > 0">
-              {{ bookmarkCount }}
+              {{ bookmarkCount > 9 ? '9+' : bookmarkCount }}
             </span>
           </button>  
 
@@ -58,10 +58,10 @@ import BookmarkList from './Bookmark/BookmarkList.vue';
 
     &__counter {
       position: absolute;
-      top: -5px;
-      right: 0px;
-      width: 20px;
-      height: 20px;
+      top: -10px;
+      right: -5px;
+      width: 25px;
+      height: 25px;
       padding: 5px;
       display: flex;
       align-items: center;

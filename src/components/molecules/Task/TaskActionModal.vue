@@ -1,11 +1,7 @@
 <template>
   <AppOverlay :is-visible="isVisible" @close="$emit('close')">
     <div class="action-modal" :class="modifiedClass">
-      <button type="button" class="close-btn" @click.stop="$emit('close')">
-        <span class="material-symbols-outlined">
-          close
-        </span>
-      </button>
+      <AppCloseButton @close="$emit('close')" />
       
       <section class="action-modal__actions">
         <h1 class="action-modal__headline">Choose following actions</h1>
@@ -53,6 +49,7 @@ import { computed, type PropType } from 'vue';
 import API from '@/services/api'
 import { useAPIStore } from '@/stores/api';
 import AppOverlay from '@/components/organisms/AppOverlay.vue';
+import AppCloseButton from '@/components/atoms/AppCloseButton.vue'
 
   type TaskType = {
     _id: string, 

@@ -1,12 +1,8 @@
 <template>
   <div class="bookmark-list" :class="modifiedClass">
-    <button type="button" class="close-btn" @click.stop="$emit('close')">
-      <span class="material-symbols-outlined">
-        close
-      </span>
-    </button>
+    <AppCloseButton @close="$emit('close')" />
 
-    <h1 class="bookmark-list__headline">Bookmarks</h1>
+    <h1 class="bookmark-list__headline">Tasks</h1>
 
     <section class="bookmark-list__items" v-if="bookmarkCount > 0">
       <BookmarkListItem 
@@ -17,7 +13,9 @@
       />
     </section>
 
-    <p class="bookmark-list_alt-text" v-else>No bookmarks</p>
+    <p class="bookmark-list_alt-text" v-else>No task(s)</p>
+
+    <AppVersion />
   </div>
 </template>
 
@@ -25,6 +23,8 @@
 import BookmarkListItem from './BookmarkListItem.vue';
 import { useBookmarkStore } from '@/stores/api/bookmark';
 import { computed } from 'vue';
+import AppCloseButton from '@/components/atoms/AppCloseButton.vue'
+import AppVersion from '@/components/atoms/AppVersion.vue';
 
 const props = defineProps({
   isVisible: {

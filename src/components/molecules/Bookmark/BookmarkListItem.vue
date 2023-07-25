@@ -36,7 +36,8 @@ import { useRouter } from 'vue-router';
     router.push({
       name: 'projectOverview',
       params: {
-        id: props.bookmark.projectId
+        id: props.bookmark.projectId,
+        taskId: props.bookmark.taskId
       }
     })
     emit('close')
@@ -49,6 +50,7 @@ import { useRouter } from 'vue-router';
     padding: 0;
     justify-content: space-between;
     align-items: center;
+    text-align: left;
 
     &__description {
       font-weight: 200;
