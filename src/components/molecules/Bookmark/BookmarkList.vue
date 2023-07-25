@@ -14,6 +14,8 @@
     </section>
 
     <p class="bookmark-list_alt-text" v-else>No task(s)</p>
+
+    <AppVersion />
   </div>
 </template>
 
@@ -22,6 +24,7 @@ import BookmarkListItem from './BookmarkListItem.vue';
 import { useBookmarkStore } from '@/stores/api/bookmark';
 import { computed } from 'vue';
 import AppCloseButton from '@/components/atoms/AppCloseButton.vue'
+import AppVersion from '@/components/atoms/AppVersion.vue';
 
 const props = defineProps({
   isVisible: {

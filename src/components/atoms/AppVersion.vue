@@ -9,13 +9,13 @@ import { appVersion } from '@/utils/version/getVersion'
 
 <style lang="scss" scoped>
   .app-version {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
     text-align: center;
-    transform: translateX(-50%);
     font-size: .7rem;
-    padding: 1rem 0;
+    padding: .25rem 0 0;
+    width: 100%;
+    display: flex;
+    margin-top: 2rem;
+    justify-content: flex-end;
     letter-spacing: .05em;
   }
 </style>
