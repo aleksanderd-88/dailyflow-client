@@ -63,6 +63,7 @@ import orderBy from 'lodash/orderBy'
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
+    grid-template-rows: auto;
     grid-auto-rows: 150px;
 
     &__project-added {
