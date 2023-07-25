@@ -41,7 +41,7 @@ import orderBy from 'lodash/orderBy'
   }>()
   
   const uniqueByDate = (projects: ProjectsType) => {
-    return orderBy(uniqBy(projects.map(p => {
+    return orderBy(uniqBy(projects?.map(p => {
       return {
         ...p,
         added: new Date(p.createdAt).getDate()
@@ -50,7 +50,7 @@ import orderBy from 'lodash/orderBy'
   }
 
   const filteredProjects = (projects: ProjectsType, project: ProjectType) => {
-    return projects.filter(i => new Date(i.createdAt).getDate() === new Date(project.createdAt).getDate())
+    return projects?.filter(i => new Date(i.createdAt).getDate() === new Date(project.createdAt).getDate())
   }
 
   const editProject = (project: ProjectType) => emit('edit', project)
