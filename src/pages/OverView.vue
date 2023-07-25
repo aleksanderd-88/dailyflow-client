@@ -43,6 +43,7 @@ import { onBeforeRouteLeave } from 'vue-router';
 type ProjectType = {
   _id: string
   name: string
+  createdAt: string
 }
 
 const searchbarIsVisible = ref(false)
