@@ -48,7 +48,7 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
-      external: 'lightvue/progress-bar'
+      external: './node_modules/lightvue/progress-bar'
     }
   },
 })
