@@ -1,12 +1,9 @@
 <template>
-  <AppOverlay :is-visible="isLoading">
-    <span class="loader"></span>
-  </AppOverlay>
+  <LvProgressBar mode="indeterminate" color="#2D383D" v-if="isLoading" />
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import AppOverlay from '../organisms/AppOverlay.vue';
 import { useLoadingStore } from '@/stores/app/loading';
 
   const isLoading = computed(() => useLoadingStore().isLoading)
