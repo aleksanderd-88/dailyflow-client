@@ -1,8 +1,10 @@
 <template>
   <div>
     <TheAppBar />
-    <router-view />
     <AppLoader />
+
+    <router-view />
+    
     <AppFeedback />
   </div>
 </template>

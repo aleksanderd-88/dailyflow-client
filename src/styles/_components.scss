@@ -1,0 +1,10 @@
+// Progress bar
+.lv-progressbar {
+  &.lv-component {
+    &.lv-progressbar {
+      &--indeterminate {
+        height: .20em !important;
+      }
+    }
+  }
+}
