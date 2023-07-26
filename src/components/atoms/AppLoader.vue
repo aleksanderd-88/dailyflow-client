@@ -1,5 +1,9 @@
 <template>
-  <LvProgressBar mode="indeterminate" color="#2D383D" v-if="isLoading" />
+  <LvProgressBar 
+    mode="indeterminate" 
+    color="#2D383D" 
+    v-if="isLoading" 
+  />
 </template>
 
 <script setup lang="ts">
@@ -10,31 +14,4 @@ import { useLoadingStore } from '@/stores/app/loading';
 </script>
 
 <style lang="scss" scoped>
-.loader {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  color: #fff;
-  box-sizing: border-box;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  animation: animloader 1s linear infinite alternate;
-}
-
-@keyframes animloader {
-  0% {
-    box-shadow: -38px -6px, -14px 6px,  14px -6px;
-  }
-  33% {
-    box-shadow: -38px 6px, -14px -6px,  14px 6px;
-  }
-  66% {
-    box-shadow: -38px -6px, -14px 6px, 14px -6px;
-  }
-  100% {
-    box-shadow: -38px 6px, -14px -6px, 14px 6px;
-  }
-}
 </style>
