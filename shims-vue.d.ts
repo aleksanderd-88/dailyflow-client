@@ -1,2 +1,2 @@
 declare module 'lodash/*'
-declare module 'lightvue/*'
+declare module '*'
