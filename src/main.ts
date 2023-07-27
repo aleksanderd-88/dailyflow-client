@@ -5,13 +5,13 @@ import { createPinia } from 'pinia'
 
 import App from '@/layouts/App.vue'
 import router from '@/router'
-import LvProgressBar from 'lightvue/progress-bar';
+import lvprogressbar from 'lightvue/progress-bar';
 
 const app = createApp(App)
 
 app.use(createPinia())
 app.use(router)
 
-app.component('LvProgressBar', LvProgressBar)
+app.component('LvProgressBar', lvprogressbar)
 
 app.mount('#app')
