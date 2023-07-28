@@ -59,6 +59,7 @@ import { computed, ref, watch } from 'vue';
 import { useLoadingStore } from '@/stores/app/loading'
 import AppForm from '@/components/molecules/AppForm.vue';
 import TaskList from '@/components/molecules/Task/TaskList.vue'
+import orderBy from 'lodash/orderBy'
 
   type TaskType = {
     _id: string, 
@@ -99,7 +100,7 @@ import TaskList from '@/components/molecules/Task/TaskList.vue'
 
   const project = computed(() => useAPIStore().item)
   const tasks = computed(() => project.value?.tasks.filter(task => !task.completed) || [])
-  const resolvedTasks = computed(() => project.value?.tasks.filter(task => task.completed))
+  const resolvedTasks = computed(() => orderBy(project.value?.tasks.filter(task => task.completed), ['createdAt'], ['desc']))
 
   const taskCount = computed(() => project.value?.tasks.length)
 
