@@ -11,6 +11,10 @@ type ParamType = {
 }
 
 export default {
+  // API version
+  getAPIversion(): Promise<AxiosResponse> {
+    return client.get('/version/get')
+  },
   // Projects
   createProject(params: ParamType) {
     return client.post('/projects/create', params)
