@@ -132,5 +132,11 @@ import { useRoute, useRouter } from 'vue-router';
     &--highlight {
       background-color: rgba(#C4ACFC, .15);
     }
+
+    @media (min-width: 1024px) {
+      &:hover {
+        background-color: darken(#EFEFF5, 2%)
+      }
+    }
   }
 </style>
