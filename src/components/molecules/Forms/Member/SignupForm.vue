@@ -33,12 +33,17 @@
     />
 
     <LvButton 
-      label="Login"
+      label="Sign up"
       type="submit" 
     />
 
     <router-link
-      :style="{ textAlign: 'center', marginTop: '1rem', display: 'block' }" 
+      :style="{ 
+        textAlign: 'center', 
+        marginTop: '1rem', 
+        display: 'block',
+        fontSize: '0.8rem'
+      }" 
       :to="{ name: 'login' }"
     >
       Already have an account? Log in here.

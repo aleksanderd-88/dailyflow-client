@@ -22,7 +22,12 @@
     />
 
     <router-link
-      :style="{ textAlign: 'center', marginTop: '1rem', display: 'block' }" 
+      :style="{ 
+        textAlign: 'center', 
+        marginTop: '1rem', 
+        display: 'block',
+        fontSize: '0.8rem'
+      }"
       :to="{ name: 'signup' }"
     >
       Don't have an account? Sign up here.

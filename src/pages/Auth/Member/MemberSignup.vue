@@ -1,7 +1,7 @@
 <template>
   <div class="l-base member-signup">
     <main class="member-signup__content">
-      <h1 class="member-signup__headline">Signup to continue</h1>
+      <h1 class="member-signup__headline">Sign up to continue</h1>
 
       <SignupForm />
     </main>
