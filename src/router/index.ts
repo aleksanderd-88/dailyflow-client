@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import OverView from '@/pages/OverView.vue'
+import LoginView from '@/pages/Auth/Member/MemberLogin.vue'
 import { useAPIStore } from '@/stores/api'
 import { useBookmarkStore } from '@/stores/api/bookmark'
 
@@ -12,9 +12,21 @@ const router = createRouter({
   routes: [
     {
       path: '/',
+      name: 'login',
+      component: LoginView,
+      beforeEnter: ((to, from) => setPageTitle('Login to continue'))
+    },
+    {
+      path: '/signup',
+      name: 'signup',
+      component: () => import('@/pages/Auth/Member/MemberSignup.vue'),
+      beforeEnter: ((to, from) => setPageTitle('Signup to continue'))
+    },
+    {
+      path: '/',
       name: 'overview',
-      component: OverView,
-      beforeEnter: ((to, from) => setPageTitle('Start'))
+      component: () => import('@/pages/OverView.vue'),
+      beforeEnter: ((to, from) => setPageTitle('Overview'))
     },
     {
       path: '/projects/:id/tasks/:taskId?',

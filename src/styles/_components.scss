@@ -8,3 +8,34 @@
     }
   }
 }
+
+// Lightvue form
+.lv-input {
+  &__label {
+    color: #222 !important;
+    font-weight: 100 !important;
+  }
+
+  &__field {
+    margin-bottom: 2rem;
+
+    &::after {
+      background-color: #1F92EE !important;
+    }
+  }
+}
+
+// Lightvue button
+.lv-button {
+  width: 100%;
+  text-align: center;
+
+  &.lv--primary {
+    background-color: #1F92EE;
+    color: #fff;
+  }
+
+  &:hover {
+    background-color: #1F92EE !important;
+  }
+}
