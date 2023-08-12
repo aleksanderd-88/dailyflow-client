@@ -23,6 +23,17 @@ export const useCurrentUserStore = defineStore('currentUser', () => {
       .finally(() => useLoadingStore().setLoading(false))
   }
 
+  const authenticateUser = (params: UserProps) => {
+    useLoadingStore().setLoading(true)
+    return API.authenticateUser({ data: params })
+      .then(({ data }) => setCurrentUser(data))
+      .catch(err => {
+        console.log(err)
+        clearCurrentUser() //- Clear current user
+      })
+      .finally(() => useLoadingStore().setLoading(false))
+  }
+
   const setCurrentUser = (params: UserProps) => {
     user.value = params
     localStorage.setItem('__user__', JSON.stringify(params))
@@ -38,6 +49,7 @@ export const useCurrentUserStore = defineStore('currentUser', () => {
 
   return {
     createUser,
-    currentUser
+    currentUser,
+    authenticateUser
   }
 })

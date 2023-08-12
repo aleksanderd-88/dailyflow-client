@@ -1,9 +1,9 @@
 <template>
-  <form @submit.prevent>
+  <form @submit.prevent="createUser()">
     <LvInput
       type="text" 
       v-model="credentials.name" 
-      label="Email" 
+      label="Name" 
       bottom-bar
       floating-label
     />
@@ -17,7 +17,7 @@
     />
     
     <LvInput
-      type="text" 
+      type="password" 
       v-model="credentials.password" 
       label="Password" 
       bottom-bar
@@ -25,7 +25,7 @@
     />
 
     <LvInput
-      type="text" 
+      type="password" 
       v-model="credentials.confirmedPassword" 
       label="Repeat password" 
       bottom-bar
@@ -55,6 +55,7 @@
 import LvInput from 'lightvue/input';
 import LvButton from 'lightvue/button'
 import { reactive } from 'vue';
+import { useCurrentUserStore } from '@/stores/current-user'
 
   const input = {
     name: '',
@@ -64,6 +65,15 @@ import { reactive } from 'vue';
   }
 
   const credentials = reactive({ ...input })
+
+  const userStore = useCurrentUserStore()
+
+  const createUser = () => {
+    const isNotValid = Boolean(!credentials || Object.values(credentials).some(c => c === ''))
+    if ( isNotValid ) return
+
+    return userStore.createUser(credentials)
+  }
 </script>
 
 <style scoped>
