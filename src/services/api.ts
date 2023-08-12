@@ -11,6 +11,7 @@ type ParamType = {
 }
 
 export default {
+  client,
   // API version
   getAPIversion(): Promise<AxiosResponse> {
     return client.get('/version/get')
@@ -53,5 +54,12 @@ export default {
   },
   listBookmark() {
     return client.get('/bookmarks/list')
+  },
+  // Users
+  createUser(params: ParamType): Promise<AxiosResponse> {
+    return client.post('/users/create', params)
+  },
+  authenticateUser(params: ParamType): Promise<AxiosResponse> {
+    return client.patch('/users/auth', params)
   }
 }
