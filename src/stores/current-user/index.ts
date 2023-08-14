@@ -7,12 +7,14 @@ type UserProps = {
   name: string
   email: string
   token: string
+  password: string
+  confirmedPassword: string
 }
 
 export const useCurrentUserStore = defineStore('currentUser', () => {
   const user = ref({} as UserProps)
 
-  const createUser = (params: UserProps) => {
+  const createUser = (params: Partial<UserProps>) => {
     useLoadingStore().setLoading(true)
     return API.createUser({ data: params })
       .then(({ data }) => setCurrentUser(data))
@@ -23,7 +25,7 @@ export const useCurrentUserStore = defineStore('currentUser', () => {
       .finally(() => useLoadingStore().setLoading(false))
   }
 
-  const authenticateUser = (params: UserProps) => {
+  const authenticateUser = (params: Partial<UserProps>) => {
     useLoadingStore().setLoading(true)
     return API.authenticateUser({ data: params })
       .then(({ data }) => setCurrentUser(data))
@@ -50,6 +52,7 @@ export const useCurrentUserStore = defineStore('currentUser', () => {
   return {
     createUser,
     currentUser,
-    authenticateUser
+    authenticateUser,
+    setCurrentUser
   }
 })
