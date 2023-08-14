@@ -51,10 +51,16 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from) => {
-  const user = useCurrentUserStore().currentUser
-  if ( to.meta.requiresAuth && !user ) {
-    return false
+  const user = JSON.parse(localStorage.getItem('__user__') as string)
+  
+  //- Prohibit user from navigating to unprotected route(s) when logged in
+  if ( !to.meta.requiresAuth && user ) {
+    useCurrentUserStore().setCurrentUser(user)
+    return { name: 'overview' }
   }
+
+  //- Continue with navigation to unprotected route(s)
+  return true
 })
 
 router.afterEach((to, from) => {
