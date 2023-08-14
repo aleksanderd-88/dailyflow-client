@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import LoginView from '@/pages/Auth/Member/MemberLogin.vue'
 import { useAPIStore } from '@/stores/api'
 import { useBookmarkStore } from '@/stores/api/bookmark'
-import { useCurrentUserStore } from '@/stores/current-user'
+import { userIsLoggedIn } from '@/utils/version/authentication'
 
 const setPageTitle = (title: string) => {
   document.title = `DailyFlow \u2022 ${ title }`
@@ -51,15 +51,16 @@ const router = createRouter({
 
 router.beforeEach((to, from) => {
   const user = JSON.parse(localStorage.getItem('__user__') as string)
-  if ( user && !to.meta.requiresAuth ) {
-    useCurrentUserStore().setCurrentUser(user)
-    return { name: 'overview' }
+  if ( to.meta.requiresAuth && !user ) {
+    return false
   }
 })
 
 router.afterEach((to, from) => {
-  useBookmarkStore().listBookmark()
-  return true
+  if ( userIsLoggedIn() ) {
+    useBookmarkStore().listBookmark()
+    return true
+  }
 })
 
 export default router

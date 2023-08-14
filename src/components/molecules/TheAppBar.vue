@@ -4,7 +4,12 @@
       <main class="app-bar__content">
 
         <section class="app-bar__actions">
-          <button type="button" class="app-bar__action-btn" @click.stop="bookmarkListVisible = !bookmarkListVisible">
+          <button 
+            type="button" 
+            class="app-bar__action-btn" 
+            @click.stop="bookmarkListVisible = !bookmarkListVisible"
+            v-if="userIsLoggedIn()"
+          >
             <span class="material-symbols-outlined material-symbols-outlined--medium">
               notification_important
             </span>
@@ -30,6 +35,7 @@
 import { computed, ref } from 'vue';
 import { useBookmarkStore } from '@/stores/api/bookmark';
 import BookmarkList from './Bookmark/BookmarkList.vue';
+import { userIsLoggedIn } from '@/utils/version/authentication';
 
   const bookmarkListVisible = ref(false)
   const bookmarkCount = computed(() => useBookmarkStore().itemCount)
