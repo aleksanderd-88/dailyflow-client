@@ -12,7 +12,7 @@ type UserProps = {
 }
 
 export const useCurrentUserStore = defineStore('currentUser', () => {
-  const user = ref({} as UserProps)
+  const user = ref<UserProps | null>({} as UserProps)
 
   const createUser = (params: Partial<UserProps>) => {
     useLoadingStore().setLoading(true)
@@ -36,7 +36,7 @@ export const useCurrentUserStore = defineStore('currentUser', () => {
       .finally(() => useLoadingStore().setLoading(false))
   }
 
-  const setCurrentUser = (params: UserProps) => {
+  const setCurrentUser = (params: UserProps | null) => {
     user.value = params
     localStorage.setItem('__user__', JSON.stringify(params))
     API.client.defaults.headers.common['Authorization'] = `Bearer ${ params?.token }`
@@ -44,7 +44,7 @@ export const useCurrentUserStore = defineStore('currentUser', () => {
 
   const clearCurrentUser = () => {
     localStorage.removeItem('__user__')
-    setCurrentUser({} as UserProps)
+    setCurrentUser(null)
   }
 
   const currentUser = computed(() => user.value)
