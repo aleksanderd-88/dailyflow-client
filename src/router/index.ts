@@ -3,6 +3,7 @@ import LoginView from '@/pages/Auth/Member/MemberLogin.vue'
 import { useAPIStore } from '@/stores/api'
 import { useBookmarkStore } from '@/stores/api/bookmark'
 import { userIsLoggedIn } from '@/utils/version/authentication'
+import { useCurrentUserStore } from '@/stores/current-user'
 
 const setPageTitle = (title: string) => {
   document.title = `DailyFlow \u2022 ${ title }`
@@ -50,7 +51,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from) => {
-  const user = JSON.parse(localStorage.getItem('__user__') as string)
+  const user = useCurrentUserStore().currentUser
   if ( to.meta.requiresAuth && !user ) {
     return false
   }
