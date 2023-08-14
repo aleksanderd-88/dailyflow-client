@@ -40,6 +40,7 @@ import LvInput from 'lightvue/input';
 import LvButton from 'lightvue/button'
 import { reactive } from 'vue';
 import { useCurrentUserStore } from '@/stores/current-user'
+import { useRouter } from 'vue-router';
 
   const input = {
     email: '',
@@ -47,6 +48,7 @@ import { useCurrentUserStore } from '@/stores/current-user'
   }
 
   const userStore = useCurrentUserStore()
+  const router = useRouter()
 
   const credentials = reactive({ ...input })
 
@@ -55,6 +57,7 @@ import { useCurrentUserStore } from '@/stores/current-user'
     if ( isNotValid ) return
 
     return userStore.authenticateUser(credentials)
+      .then(() => router.replace({ name: 'overview' }))
   }
 </script>
 
