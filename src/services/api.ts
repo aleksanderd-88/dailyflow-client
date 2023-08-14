@@ -1,3 +1,5 @@
+import router from '@/router'
+import { useCurrentUserStore } from '@/stores/current-user'
 import axios, { type AxiosResponse } from 'axios'
 
 const client = axios.create({
@@ -9,6 +11,22 @@ const client = axios.create({
 type ParamType = {
   data: Record<string, unknown>
 }
+
+client.interceptors.request.use(req => {
+  return req
+}, err => {
+  //- Clear user data and redirect to login page
+  useCurrentUserStore().clearCurrentUser()
+  router.push('/')
+})
+
+client.interceptors.response.use(res => {
+  return res
+}, err => {
+  //- Clear user data and redirect to login page
+  useCurrentUserStore().clearCurrentUser()
+  router.push('/')
+})
 
 export default {
   client,
