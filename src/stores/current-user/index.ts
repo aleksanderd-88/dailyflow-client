@@ -53,6 +53,7 @@ export const useCurrentUserStore = defineStore('currentUser', () => {
     createUser,
     currentUser,
     authenticateUser,
-    setCurrentUser
+    setCurrentUser,
+    clearCurrentUser
   }
 })
