@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import LoginView from '@/pages/Auth/Member/MemberLogin.vue'
 import { useAPIStore } from '@/stores/api'
 import { useBookmarkStore } from '@/stores/api/bookmark'
+import { useCurrentUserStore } from '@/stores/current-user'
 
 const setPageTitle = (title: string) => {
   document.title = `DailyFlow \u2022 ${ title }`
@@ -26,7 +27,10 @@ const router = createRouter({
       path: '/',
       name: 'overview',
       component: () => import('@/pages/OverView.vue'),
-      beforeEnter: ((to, from) => setPageTitle('Overview'))
+      beforeEnter: ((to, from) => setPageTitle('Overview')),
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/projects/:id/tasks/:taskId?',
@@ -37,9 +41,20 @@ const router = createRouter({
           setPageTitle(`${ data?.name }`)
           return true
         })
+      },
+      meta: {
+        requiresAuth: true
       }
     }
   ]
+})
+
+router.beforeEach((to, from) => {
+  const user = JSON.parse(localStorage.getItem('__user__') as string)
+  if ( user && !to.meta.requiresAuth ) {
+    useCurrentUserStore().setCurrentUser(user)
+    return { name: 'overview' }
+  }
 })
 
 router.afterEach((to, from) => {
