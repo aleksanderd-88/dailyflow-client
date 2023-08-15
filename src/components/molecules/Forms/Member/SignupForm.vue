@@ -56,6 +56,7 @@ import LvInput from 'lightvue/input';
 import LvButton from 'lightvue/button'
 import { reactive } from 'vue';
 import { useCurrentUserStore } from '@/stores/current-user'
+import { useRouter } from 'vue-router';
 
   const input = {
     name: '',
@@ -67,12 +68,14 @@ import { useCurrentUserStore } from '@/stores/current-user'
   const credentials = reactive({ ...input })
 
   const userStore = useCurrentUserStore()
+  const router = useRouter()
 
   const createUser = () => {
     const isNotValid = Boolean(!credentials || Object.values(credentials).some(c => c === ''))
     if ( isNotValid ) return
 
     return userStore.createUser(credentials)
+      .then(() => router.replace({ name: 'overview' }))
   }
 </script>
 
