@@ -16,21 +16,25 @@ const router = createRouter({
       path: '/',
       name: 'login',
       component: LoginView,
-      beforeEnter: ((to, from) => setPageTitle('Login to continue'))
+      meta: {
+        pageTitle: 'Login to continue'
+      }
     },
     {
       path: '/signup',
       name: 'signup',
       component: () => import('@/pages/Auth/Member/MemberSignup.vue'),
-      beforeEnter: ((to, from) => setPageTitle('Signup to continue'))
+      meta: {
+        pageTitle: 'Signup to continue'
+      }
     },
     {
       path: '/',
       name: 'overview',
       component: () => import('@/pages/OverView.vue'),
-      beforeEnter: ((to, from) => setPageTitle('Overview')),
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        pageTitle: 'Overview'
       }
     },
     {
@@ -69,6 +73,8 @@ router.beforeEach((to, from) => {
 })
 
 router.afterEach((to, from) => {
+  setPageTitle(to.meta?.pageTitle as string)
+
   if ( userIsLoggedIn() ) {
     useBookmarkStore().listBookmark()
     return true
