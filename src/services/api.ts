@@ -16,27 +16,31 @@ type ParamType = {
 client.interceptors.request.use(req => {
   return req
 }, err => {
-  if ( err.code === 'ERR_BAD_REQUEST' ) {
-    //- Send error feedback to user
-    useFeedbackStore().setFeedbackVisibility(true, err.response.data, 'error', 5000)
-  }
+  console.log(err);
+
+  //- Send error feedback to user
+  useFeedbackStore().setFeedbackVisibility(true, err.response.data, 'error', 5000)
   
-  //- Clear user data and redirect to login page
-  useCurrentUserStore().clearCurrentUser()
-  router.push('/')
+  if ( ['Unauthorized', 'Forbidden'].includes(err.response.statusText) ) {
+    //- Clear user data and redirect to login page
+    useCurrentUserStore().clearCurrentUser()
+    router.push('/')
+  }
 })
 
 client.interceptors.response.use(res => {
   return res
 }, err => {
-  if ( err.code === 'ERR_BAD_REQUEST' ) {
-    //- Send error feedback to user
-    useFeedbackStore().setFeedbackVisibility(true, err.response.data, 'error', 5000)
-  }
+  console.log(err);
+  
+  //- Send error feedback to user
+  useFeedbackStore().setFeedbackVisibility(true, err.response.data, 'error', 5000)
 
-  //- Clear user data and redirect to login page
-  useCurrentUserStore().clearCurrentUser()
-  router.push('/')
+  if ( ['Unauthorized', 'Forbidden'].includes(err.response.statusText) ) {
+    //- Clear user data and redirect to login page
+    useCurrentUserStore().clearCurrentUser()
+    router.push('/')
+  }
 })
 
 export default {
