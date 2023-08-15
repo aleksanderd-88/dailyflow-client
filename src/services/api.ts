@@ -1,4 +1,5 @@
 import router from '@/router'
+import { useFeedbackStore } from '@/stores/app/feedback'
 import { useCurrentUserStore } from '@/stores/current-user'
 import axios, { type AxiosResponse } from 'axios'
 
@@ -15,6 +16,11 @@ type ParamType = {
 client.interceptors.request.use(req => {
   return req
 }, err => {
+  if ( err.code === 'ERR_BAD_REQUEST' ) {
+    //- Send error feedback to user
+    useFeedbackStore().setFeedbackVisibility(true, err.response.data, 'error', 5000)
+  }
+  
   //- Clear user data and redirect to login page
   useCurrentUserStore().clearCurrentUser()
   router.push('/')
@@ -23,6 +29,11 @@ client.interceptors.request.use(req => {
 client.interceptors.response.use(res => {
   return res
 }, err => {
+  if ( err.code === 'ERR_BAD_REQUEST' ) {
+    //- Send error feedback to user
+    useFeedbackStore().setFeedbackVisibility(true, err.response.data, 'error', 5000)
+  }
+
   //- Clear user data and redirect to login page
   useCurrentUserStore().clearCurrentUser()
   router.push('/')
