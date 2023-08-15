@@ -59,6 +59,11 @@ router.beforeEach((to, from) => {
     return { name: 'overview' }
   }
 
+  //- Prevent navigating to protected route if user is not set
+  if ( to.meta.requiresAuth && !user ) {
+    return false
+  }
+
   //- Continue with navigation to unprotected route(s)
   return true
 })
