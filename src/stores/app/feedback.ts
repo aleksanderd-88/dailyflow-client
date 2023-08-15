@@ -7,13 +7,13 @@ export const useFeedbackStore =  defineStore('feedback', () => {
   const mode = ref('')
   const timeoutId = ref()
 
-  const setFeedbackVisibility = (value: boolean, text = 'No custom text was provided',  status = '') => {
+  const setFeedbackVisibility = (value: boolean, text = 'No custom text was provided',  status = '', timer = 2500) => {
     clearFeedback()
     is_visible.value = value
     mode.value = status
     setFeedbackText(text)
 
-    timeoutId.value = setTimeout(() => clearFeedback(), 2500);
+    timeoutId.value = setTimeout(() => clearFeedback(), timer);
   }
 
   const setFeedbackText = (value: string) => {
