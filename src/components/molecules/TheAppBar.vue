@@ -55,6 +55,8 @@ import { useRouter } from 'vue-router';
   const router = useRouter()
 
   const logout = () => {
+    if (!confirm('You are about to logout. Do you wish to continue?')) return
+    
     useCurrentUserStore().clearCurrentUser()
     router.replace('/')
   }
