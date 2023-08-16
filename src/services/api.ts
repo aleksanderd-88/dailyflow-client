@@ -21,7 +21,7 @@ client.interceptors.request.use(req => {
   //- Send error feedback to user
   useFeedbackStore().setFeedbackVisibility(true, err.response.data, 'error', 5000)
   
-  if ( ['Unauthorized', 'Forbidden'].includes(err.response.statusText) ) {
+  if ( [401, 403].includes(err.response.status) ) {
     //- Clear user data and redirect to login page
     useCurrentUserStore().clearCurrentUser()
     router.push('/')
@@ -36,7 +36,7 @@ client.interceptors.response.use(res => {
   //- Send error feedback to user
   useFeedbackStore().setFeedbackVisibility(true, err.response.data, 'error', 5000)
 
-  if ( ['Unauthorized', 'Forbidden'].includes(err.response.statusText) ) {
+  if ( [401, 403].includes(err.response.status) ) {
     //- Clear user data and redirect to login page
     useCurrentUserStore().clearCurrentUser()
     router.push('/')
