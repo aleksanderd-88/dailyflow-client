@@ -3,6 +3,13 @@
     <nav class="app-bar">
       <main class="app-bar__content">
 
+        <div 
+          class="app-bar__user-name"
+          v-if="userIsLoggedIn()"
+        >
+            {{ userInitials }}
+        </div>
+
         <section 
           class="app-bar__actions"
           v-if="userIsLoggedIn()"
@@ -54,9 +61,15 @@ import { useRouter } from 'vue-router';
 
   const router = useRouter()
 
+  const userInitials = computed(() => {
+    const firstName = useCurrentUserStore().currentUser?.name.split(' ')[0]
+    const lastName = useCurrentUserStore().currentUser?.name.split(' ')[1]
+    return firstName?.charAt(0).toUpperCase() + '' + lastName?.charAt(0).toUpperCase()
+  })
+
   const logout = () => {
     if (!confirm('You are about to logout. Do you wish to continue?')) return
-    
+
     useCurrentUserStore().clearCurrentUser()
     router.replace('/')
   }
@@ -65,6 +78,7 @@ import { useRouter } from 'vue-router';
 <style lang="scss" scoped>
   .app-bar {
     box-shadow: 0 7px 12px -4px rgba(#000, .1);
+
     &__content {
       padding: 0 1rem;
       display: flex;
@@ -75,6 +89,19 @@ import { useRouter } from 'vue-router';
       height: 60px;
       position: relative;
     }
+
+    &__user-name {
+      border-radius: 50%;
+      border: 1px solid #2D383D;
+      color: #2D383D;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+    }
+
     &__actions {
       margin-left: auto;
       display: flex;
