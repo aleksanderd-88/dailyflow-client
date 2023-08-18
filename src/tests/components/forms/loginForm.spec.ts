@@ -25,6 +25,6 @@ describe('LoginForm.vue', () => {
     expect(emailField?.exists()).toBe(true)
 
     await emailField?.setValue('test@example.com')
-    expect((emailField?.element as HTMLInputElement).value).toBe('test@example.com')
+    expect((emailField?.element as HTMLInputElement).value).toBe('test@example.com1')
   })
 })
