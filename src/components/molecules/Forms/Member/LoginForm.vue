@@ -6,6 +6,7 @@
       label="Email" 
       bottom-bar
       floating-label
+      data-test="email"
     />
 
     <LvInput
@@ -13,7 +14,8 @@
       v-model="credentials.password" 
       label="Password" 
       bottom-bar
-      floating-label 
+      floating-label
+      data-password
     />
 
     <LvButton 
