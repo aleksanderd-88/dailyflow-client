@@ -24,7 +24,7 @@ jobs:
     steps:
       # Reference the develop branch. For more information visit https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idstepsuses
       - name: Checkout under $GITHUB_WORKSPACE
-        uses: actions/checkout@develop
+        uses: actions/checkout@v2
 
       # Specify which version of Node this project is using. For more information visit.
       # https://docs.github.com/en/actions/guides/building-and-testing-nodejs#specifying-the-nodejs-version
