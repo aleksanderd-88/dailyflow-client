@@ -14,6 +14,7 @@
       label="Email" 
       bottom-bar
       floating-label
+      data-test="email"
     />
     
     <LvInput
