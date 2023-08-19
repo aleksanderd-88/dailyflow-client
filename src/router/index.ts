@@ -56,6 +56,11 @@ const router = createRouter({
 
 router.beforeEach((to, from) => {
   const user = JSON.parse(localStorage.getItem('__user__') as string)
+
+  //- First check - Always set user data if already logged in
+  if ( user ) {
+    useCurrentUserStore().setCurrentUser(user) 
+  }
   
   //- Prohibit user from navigating to unprotected route(s) when logged in
   if ( !to.meta.requiresAuth && user ) {
@@ -73,7 +78,9 @@ router.beforeEach((to, from) => {
 })
 
 router.afterEach((to, from) => {
-  setPageTitle(to.meta?.pageTitle as string)
+  //- Invoke `setPageTitle` function for routes that contains a `pageTitle` meta prop
+  if ( to.meta?.pageTitle )
+    setPageTitle(to.meta?.pageTitle as string)
 
   if ( userIsLoggedIn() ) {
     useBookmarkStore().listBookmark()
