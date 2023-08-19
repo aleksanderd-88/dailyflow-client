@@ -1,7 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import OverView from '@/pages/OverView.vue'
+import LoginView from '@/pages/Auth/Member/MemberLogin.vue'
 import { useAPIStore } from '@/stores/api'
 import { useBookmarkStore } from '@/stores/api/bookmark'
+import { userIsLoggedIn } from '@/utils/version/authentication'
+import { useCurrentUserStore } from '@/stores/current-user'
 
 const setPageTitle = (title: string) => {
   document.title = `DailyFlow \u2022 ${ title }`
@@ -12,9 +14,28 @@ const router = createRouter({
   routes: [
     {
       path: '/',
+      name: 'login',
+      component: LoginView,
+      meta: {
+        pageTitle: 'Login to continue'
+      }
+    },
+    {
+      path: '/signup',
+      name: 'signup',
+      component: () => import('@/pages/Auth/Member/MemberSignup.vue'),
+      meta: {
+        pageTitle: 'Signup to continue'
+      }
+    },
+    {
+      path: '/',
       name: 'overview',
-      component: OverView,
-      beforeEnter: ((to, from) => setPageTitle('Start'))
+      component: () => import('@/pages/OverView.vue'),
+      meta: {
+        requiresAuth: true,
+        pageTitle: 'Overview'
+      }
     },
     {
       path: '/projects/:id/tasks/:taskId?',
@@ -25,14 +46,46 @@ const router = createRouter({
           setPageTitle(`${ data?.name }`)
           return true
         })
+      },
+      meta: {
+        requiresAuth: true
       }
     }
   ]
 })
 
-router.afterEach((to, from) => {
-  useBookmarkStore().listBookmark()
+router.beforeEach((to, from) => {
+  const user = JSON.parse(localStorage.getItem('__user__') as string)
+
+  //- First check - Always set user data if already logged in
+  if ( user ) {
+    useCurrentUserStore().setCurrentUser(user) 
+  }
+  
+  //- Prohibit user from navigating to unprotected route(s) when logged in
+  if ( !to.meta.requiresAuth && user ) {
+    useCurrentUserStore().setCurrentUser(user)
+    return { name: 'overview' }
+  }
+
+  //- Prevent navigating to protected route if user is not set
+  if ( to.meta.requiresAuth && !user ) {
+    return false
+  }
+
+  //- Continue with navigation to unprotected route(s)
   return true
+})
+
+router.afterEach((to, from) => {
+  //- Invoke `setPageTitle` function for routes that contains a `pageTitle` meta prop
+  if ( to.meta?.pageTitle )
+    setPageTitle(to.meta?.pageTitle as string)
+
+  if ( userIsLoggedIn() ) {
+    useBookmarkStore().listBookmark()
+    return true
+  }
 })
 
 export default router

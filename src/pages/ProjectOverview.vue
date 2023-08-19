@@ -30,7 +30,11 @@
         {{ `${ resolvedTaskListIsVisible ? 'HIDE RESOLVED' : 'SHOW RESOLVED' }` }}
       </button>
 
-      <TaskList :tasks="resolvedTasks" v-if="resolvedTaskListIsVisible" />
+      <TaskList 
+        :tasks="resolvedTasks" 
+        v-if="resolvedTaskListIsVisible"
+        class="project-overview__resolved-tasks"
+      />
     </main>
 
     <footer>
@@ -59,6 +63,7 @@ import { computed, ref, watch } from 'vue';
 import { useLoadingStore } from '@/stores/app/loading'
 import AppForm from '@/components/molecules/AppForm.vue';
 import TaskList from '@/components/molecules/Task/TaskList.vue'
+import orderBy from 'lodash/orderBy'
 
   type TaskType = {
     _id: string, 
@@ -99,7 +104,7 @@ import TaskList from '@/components/molecules/Task/TaskList.vue'
 
   const project = computed(() => useAPIStore().item)
   const tasks = computed(() => project.value?.tasks.filter(task => !task.completed) || [])
-  const resolvedTasks = computed(() => project.value?.tasks.filter(task => task.completed))
+  const resolvedTasks = computed(() => orderBy(project.value?.tasks.filter(task => task.completed), ['createdAt'], ['desc']))
 
   const taskCount = computed(() => project.value?.tasks.length)
 
@@ -188,6 +193,12 @@ import TaskList from '@/components/molecules/Task/TaskList.vue'
       @media (min-width: 1024px) {
         right: 3rem;
         bottom: 2rem;
+      }
+    }
+
+    &__resolved-tasks {
+      @media (max-width: 1200px) {
+        padding-bottom: calc(2rem + 60px);
       }
     }
   }

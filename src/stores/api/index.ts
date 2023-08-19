@@ -28,13 +28,15 @@ export const useAPIStore = defineStore('api', () => {
 
   const createProject = async (params: { data: Record<string, unknown>}) => {
     useLoadingStore().setLoading(true)
-    return API.createProject(params).then(() => {
+    return API.createProject(params).then(({ data }) => {
+      if ( !data ) return
+      
       listProjects()
       useFeedbackStore().setFeedbackVisibility(true, 'Project created.')
     })
     .catch(err => {
       console.log(err)
-      useFeedbackStore().setFeedbackVisibility(true, 'Something went wrong ...', 'error')
+      useFeedbackStore().setFeedbackVisibility(true, 'Something went wrong ...', 'error', 5000)
     })
     .finally(() => useLoadingStore().setLoading(false))
   }
