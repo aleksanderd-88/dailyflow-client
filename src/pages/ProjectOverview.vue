@@ -30,7 +30,11 @@
         {{ `${ resolvedTaskListIsVisible ? 'HIDE RESOLVED' : 'SHOW RESOLVED' }` }}
       </button>
 
-      <TaskList :tasks="resolvedTasks" v-if="resolvedTaskListIsVisible" />
+      <TaskList 
+        :tasks="resolvedTasks" 
+        v-if="resolvedTaskListIsVisible"
+        class="project-overview__resolved-tasks"
+      />
     </main>
 
     <footer>
@@ -189,6 +193,12 @@ import orderBy from 'lodash/orderBy'
       @media (min-width: 1024px) {
         right: 3rem;
         bottom: 2rem;
+      }
+    }
+
+    &__resolved-tasks {
+      @media (max-width: 1200px) {
+        padding-bottom: calc(2rem + 60px);
       }
     }
   }
