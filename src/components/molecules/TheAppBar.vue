@@ -54,7 +54,7 @@
 import { computed, ref } from 'vue';
 import { useBookmarkStore } from '@/stores/api/bookmark';
 import BookmarkList from './Bookmark/BookmarkList.vue';
-import { userIsLoggedIn } from '@/utils/version/authentication';
+import { userIsLoggedIn } from '@/utils/authentication';
 import { useCurrentUserStore } from '@/stores/current-user';
 import TheMenuButton from '@/components/atoms/TheMenuButton.vue'
 import TheAppMenu from './TheAppMenu.vue';
@@ -126,4 +126,4 @@ import TheAppMenu from './TheAppMenu.vue';
       background-color: lighten(#ff3d00, 5%);
     }
   }
-</style>
+</style>@/utils/authentication

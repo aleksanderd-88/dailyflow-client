@@ -6,6 +6,17 @@
           @click.stop="$emit('close')"
         />
 
+        <button 
+          type="button"
+          class="app-menu__menu-btn app-menu__theme-btn"
+          @click.stop="setDarkMode()"
+        >
+          <span class="material-symbols-outlined">
+            {{ `${ isDarkMode ? 'light' : 'dark' }_mode` }}
+          </span>
+          Set {{ isDarkMode ? 'light' : 'dark' }} mode
+        </button>
+
         <button
           title="Log out"
           @click="logout()"
@@ -25,7 +36,7 @@ import { useCurrentUserStore } from '@/stores/current-user';
 import { useRouter } from 'vue-router';
 import AppOverlay from '@/components/organisms/AppOverlay.vue';
 import AppCloseButton from '../atoms/AppCloseButton.vue';
-import { computed } from 'vue';
+import { computed, ref, watch } from 'vue';
 
   const props = defineProps({
     isVisible: {
@@ -39,6 +50,11 @@ import { computed } from 'vue';
   }>()
 
   const router = useRouter()
+  const isDarkMode = ref(false)
+
+  watch(() => isDarkMode.value, (value: boolean) => {
+    localStorage.setItem('__dark-mode__', JSON.stringify(value))
+  }, { immediate: true })
 
   const menuIsVisible = computed(() => props.isVisible && 'app-menu--visible')
 
@@ -48,6 +64,10 @@ import { computed } from 'vue';
     useCurrentUserStore().clearCurrentUser()
     router.replace('/')
     emit('close')
+  }
+
+  const setDarkMode = () => {
+    isDarkMode.value = !isDarkMode.value
   }
 
 </script>
@@ -66,12 +86,12 @@ import { computed } from 'vue';
     flex-direction: column;
     justify-content: center;
 
-    &__logout-btn {
+    &__menu-btn {
       width: 100%;
       display: flex;
       align-items: center;
-      justify-content: center;
       gap: 1rem;
+      margin-top: 1rem;
     }
 
     @media (min-width: 1024px) {
@@ -83,10 +103,6 @@ import { computed } from 'vue';
       visibility: hidden;
       transform: translate(-50%, 2px);
       transition: transform .25s, visibility .25s, opacity .25s ease;
-
-      #{$root}__logout-btn {
-        justify-content: flex-start;
-      }
 
       &--visible {
         opacity: 1;
