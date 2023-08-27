@@ -26,18 +26,20 @@
             <span class="app-bar__counter" v-if="bookmarkCount > 0">
               {{ bookmarkCount > 9 ? '9+' : bookmarkCount }}
             </span>
-          </button>  
-
-          <button
-            title="Log out"
-            @click="logout()"
-          >
-            <span class="material-symbols-outlined">
-              logout
-            </span>
           </button>
+
+          <TheMenuButton 
+            class="app-bar__menu-btn"
+            @click.stop="menuIsVisible = true"
+          />
+
+          <TheAppMenu 
+            :is-visible="menuIsVisible"
+            @close="menuIsVisible = false" 
+          />
+
         </section>
-        
+
         <BookmarkList 
           :is-visible="bookmarkListVisible" 
           @close="bookmarkListVisible = false"
@@ -54,25 +56,19 @@ import { useBookmarkStore } from '@/stores/api/bookmark';
 import BookmarkList from './Bookmark/BookmarkList.vue';
 import { userIsLoggedIn } from '@/utils/version/authentication';
 import { useCurrentUserStore } from '@/stores/current-user';
-import { useRouter } from 'vue-router';
+import TheMenuButton from '@/components/atoms/TheMenuButton.vue'
+import TheAppMenu from './TheAppMenu.vue';
 
   const bookmarkListVisible = ref(false)
-  const bookmarkCount = computed(() => useBookmarkStore().itemCount)
+  const menuIsVisible = ref(false)
 
-  const router = useRouter()
+  const bookmarkCount = computed(() => useBookmarkStore().itemCount)
 
   const userInitials = computed(() => {
     const firstName = useCurrentUserStore().currentUser?.name.split(' ')[0]
     const lastName = useCurrentUserStore().currentUser?.name.split(' ')[1]
     return firstName?.charAt(0).toUpperCase() + '' + lastName?.charAt(0).toUpperCase()
   })
-
-  const logout = () => {
-    if (!confirm('You are about to logout. Do you wish to continue?')) return
-
-    useCurrentUserStore().clearCurrentUser()
-    router.replace('/')
-  }
 </script>
 
 <style lang="scss" scoped>
