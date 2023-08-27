@@ -37,6 +37,7 @@ import { useRouter } from 'vue-router';
 import AppOverlay from '@/components/organisms/AppOverlay.vue';
 import AppCloseButton from '../atoms/AppCloseButton.vue';
 import { computed, ref, watch } from 'vue';
+import { useFeedbackStore } from '@/stores/app/feedback';
 
   const props = defineProps({
     isVisible: {
@@ -53,11 +54,8 @@ import { computed, ref, watch } from 'vue';
   const isDarkMode = ref(JSON.parse(localStorage.getItem('__dark-mode__') as string) || false)
 
   watch(() => isDarkMode.value, (value: boolean) => {
-    document.body.classList.remove('dark-mode')
+    document.body.classList.toggle('dark-mode')
     localStorage.setItem('__dark-mode__', JSON.stringify(value))
-    if ( value ) {
-      document.body.classList.add('dark-mode')
-    } 
   }, { immediate: true })
 
   const menuIsVisible = computed(() => props.isVisible && 'app-menu--visible')
@@ -71,7 +69,9 @@ import { computed, ref, watch } from 'vue';
   }
 
   const setDarkMode = () => {
+    emit('close')
     isDarkMode.value = !isDarkMode.value
+    useFeedbackStore().setFeedbackVisibility(true, `Theme has been set to ${ isDarkMode.value ? 'dark' : 'light' } mode`)
   }
 
 </script>

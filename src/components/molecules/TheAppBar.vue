@@ -73,6 +73,8 @@ import TheAppMenu from './TheAppMenu.vue';
 
 <style lang="scss" scoped>
   .app-bar {
+    $root: &;
+
     box-shadow: 0 7px 12px -4px rgba(#000, .1);
 
     &__content {
@@ -125,5 +127,24 @@ import TheAppMenu from './TheAppMenu.vue';
       border: 1px solid #fff;
       background-color: lighten(#ff3d00, 5%);
     }
+
+    body.dark-mode & {
+      background-color: $darkColor;
+      
+      #{$root}__user-name {
+        border: 1px solid #fff;
+        color: #fff;
+      }
+
+      #{$root}__action-btn {
+        span {
+          color: #fff;
+        }
+      }
+
+      #{$root}__counter {
+        border: none;
+      }
+    }
   }
-</style>@/utils/authentication
+</style>

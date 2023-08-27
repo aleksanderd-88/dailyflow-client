@@ -10,5 +10,12 @@
 
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  .menu-btn {
+    body.dark-mode & {
+      span {
+        color: #fff;
+      }
+    }
+  }
 </style>
