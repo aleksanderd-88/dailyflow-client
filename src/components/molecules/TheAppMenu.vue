@@ -50,10 +50,14 @@ import { computed, ref, watch } from 'vue';
   }>()
 
   const router = useRouter()
-  const isDarkMode = ref(false)
+  const isDarkMode = ref(JSON.parse(localStorage.getItem('__dark-mode__') as string) || false)
 
   watch(() => isDarkMode.value, (value: boolean) => {
+    document.body.classList.remove('dark-mode')
     localStorage.setItem('__dark-mode__', JSON.stringify(value))
+    if ( value ) {
+      document.body.classList.add('dark-mode')
+    } 
   }, { immediate: true })
 
   const menuIsVisible = computed(() => props.isVisible && 'app-menu--visible')
