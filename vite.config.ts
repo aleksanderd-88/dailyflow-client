@@ -45,5 +45,12 @@ export default defineConfig({
   },
   define: {
     APP_VERSION: JSON.stringify(process.env.npm_package_version),
+  },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@import "@/styles/_global.scss";`
+      }
+    }
   }
 })
