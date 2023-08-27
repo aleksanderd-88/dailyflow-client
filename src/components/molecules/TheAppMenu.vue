@@ -36,8 +36,8 @@ import { useCurrentUserStore } from '@/stores/current-user';
 import { useRouter } from 'vue-router';
 import AppOverlay from '@/components/organisms/AppOverlay.vue';
 import AppCloseButton from '../atoms/AppCloseButton.vue';
-import { computed, ref, watch } from 'vue';
-import { useFeedbackStore } from '@/stores/app/feedback';
+import { computed } from 'vue';
+import { useThemeStore } from '@/stores/app/theme'
 
   const props = defineProps({
     isVisible: {
@@ -51,14 +51,10 @@ import { useFeedbackStore } from '@/stores/app/feedback';
   }>()
 
   const router = useRouter()
-  const isDarkMode = ref(JSON.parse(localStorage.getItem('__dark-mode__') as string) || false)
-
-  watch(() => isDarkMode.value, (value: boolean) => {
-    document.body.classList.toggle('dark-mode')
-    localStorage.setItem('__dark-mode__', JSON.stringify(value))
-  }, { immediate: true })
+  const themeStore = useThemeStore()
 
   const menuIsVisible = computed(() => props.isVisible && 'app-menu--visible')
+  const isDarkMode = computed(() => !!themeStore.isDarkMode)
 
   const logout = () => {
     if (!confirm('You are about to logout. Do you wish to continue?')) return
@@ -70,8 +66,7 @@ import { useFeedbackStore } from '@/stores/app/feedback';
 
   const setDarkMode = () => {
     emit('close')
-    isDarkMode.value = !isDarkMode.value
-    useFeedbackStore().setFeedbackVisibility(true, `Theme has been set to ${ isDarkMode.value ? 'dark' : 'light' } mode`)
+    themeStore.setTheme()
   }
 
 </script>
