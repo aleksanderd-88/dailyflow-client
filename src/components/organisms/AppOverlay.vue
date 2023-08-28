@@ -35,5 +35,9 @@ const modifiedClass = computed(() => props.isVisible && 'app-overlay--visible')
       opacity: 1;
       visibility: visible;
     }
+
+    body.dark-mode & {
+      background-color: rgba(#000, .5);
+    }
   }
 </style>

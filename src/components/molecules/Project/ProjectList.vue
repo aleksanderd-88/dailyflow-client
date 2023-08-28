@@ -86,5 +86,11 @@ import orderBy from 'lodash/orderBy'
       display: flex;
       flex-wrap: wrap;
     }
+
+    body.dark-mode & {
+      &__project-added {
+        color: $themeWhite;
+      }
+    }
   }
 </style>
