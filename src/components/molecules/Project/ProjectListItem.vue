@@ -140,5 +140,16 @@ import { useAPIStore } from '@/stores/api';
       flex-basis: 150px;
       height: 150px;
     }
+
+    body.dark-mode & {
+      background-color: $darkColor;
+      color: $themeWhite;
+
+      &__action-btn {
+        span {
+          color: $themeWhite;
+        }
+      }
+    }
   }
 </style>

@@ -14,7 +14,7 @@
   .menu-btn {
     body.dark-mode & {
       span {
-        color: #fff;
+        color: $themeWhite;
       }
     }
   }

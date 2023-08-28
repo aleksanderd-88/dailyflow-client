@@ -132,13 +132,13 @@ import TheAppMenu from './TheAppMenu.vue';
       background-color: $darkColor;
       
       #{$root}__user-name {
-        border: 1px solid #fff;
-        color: #fff;
+        border: 1px solid $themeWhite;
+        color: $themeWhite;
       }
 
       #{$root}__action-btn {
         span {
-          color: #fff;
+          color: $themeWhite;
         }
       }
 

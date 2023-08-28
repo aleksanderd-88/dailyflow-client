@@ -14,4 +14,14 @@
     font-weight: 200;
     font-size: 3rem;
   }
+
+  body.dark-mode & {
+    &__content {
+      background-color: darken($darkColor, 2%);
+    }
+
+    &__headline {
+      color: $themeWhite;
+    }
+  }
 }
