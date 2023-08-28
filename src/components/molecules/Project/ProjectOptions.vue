@@ -1,6 +1,9 @@
 <template>
   <div class="project-options" @click.self.stop>
-    <AppCloseButton @close="$emit('close')" />
+    <AppCloseButton 
+      @close="$emit('close')" 
+      :light="isDarkMode"
+    />
 
     <button 
       type="button" 
@@ -22,6 +25,12 @@
 
 <script setup lang="ts">
 import AppCloseButton from '@/components/atoms/AppCloseButton.vue'
+import { useThemeStore } from '@/stores/app/theme';
+import { computed } from 'vue';
+
+const themeStore = useThemeStore()
+
+const isDarkMode = computed(() => themeStore.darkMode)
 </script>
 
 <style lang="scss" scoped>

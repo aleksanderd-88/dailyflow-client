@@ -135,5 +135,13 @@ const setEditMode = (param: ProjectType) => {
         background-position: center;
       }
     }
+
+    body.dark-mode & {
+      background-color: darken($darkColor, 2%);
+
+      &__sub-headline {
+        color: $themeWhite;
+      }
+    }
   }
 </style>

@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import LoginView from '@/pages/Auth/Member/MemberLogin.vue'
 import { useAPIStore } from '@/stores/api'
 import { useBookmarkStore } from '@/stores/api/bookmark'
-import { userIsLoggedIn } from '@/utils/version/authentication'
+import { userIsLoggedIn } from '@/utils/authentication'
 import { useCurrentUserStore } from '@/stores/current-user'
 
 const setPageTitle = (title: string) => {
