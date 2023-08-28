@@ -9,7 +9,7 @@
         <button 
           type="button"
           class="app-menu__menu-btn app-menu__theme-btn"
-          @click.stop="setDarkMode()"
+          @click.stop="toggleTheme()"
         >
           <span class="material-symbols-outlined">
             {{ `${ isDarkMode ? 'light' : 'dark' }_mode` }}
@@ -54,7 +54,7 @@ import { useThemeStore } from '@/stores/app/theme'
   const themeStore = useThemeStore()
 
   const menuIsVisible = computed(() => props.isVisible && 'app-menu--visible')
-  const isDarkMode = computed(() => !!themeStore.isDarkMode)
+  const isDarkMode = computed(() => !!themeStore.darkMode)
 
   const logout = () => {
     if (!confirm('You are about to logout. Do you wish to continue?')) return
@@ -64,9 +64,9 @@ import { useThemeStore } from '@/stores/app/theme'
     emit('close')
   }
 
-  const setDarkMode = () => {
+  const toggleTheme = () => {
     emit('close')
-    themeStore.setTheme()
+    themeStore.toggleTheme()
   }
 
 </script>

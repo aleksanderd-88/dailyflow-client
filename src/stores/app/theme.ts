@@ -1,35 +1,41 @@
 import { defineStore } from "pinia";
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watchEffect } from 'vue'
 import { useFeedbackStore } from "./feedback";
 import { userIsLoggedIn } from "@/utils/authentication";
 
 export const useThemeStore = defineStore('theme', () => {
-  const themeMode = ref(JSON.parse(localStorage.getItem('__dark-mode__') as string) || false)
-  const isDarkMode = computed(() => themeMode.value)
+  
+  const isThemeDark = computed(() => Boolean(JSON.parse(localStorage.getItem('__dark-mode__') as string)))
+  const darkMode = ref(isThemeDark.value || false)
 
-  watch(() => isDarkMode.value, (value: boolean) => {
-    document.body.classList.toggle('dark-mode')
-    localStorage.setItem('__dark-mode__', JSON.stringify(value))
-  }, { immediate: true })
-
-  watch(() => userIsLoggedIn(), val => {
-    if ( !val ) {
-      resetThemeMode()
+  const toggleTheme = () => {
+    if ( !darkMode.value ) {
+      darkMode.value = true
+    } else {
+      darkMode.value = false
     }
-  }, { immediate: true })
 
-  const setTheme = () => {
-    themeMode.value = !themeMode.value
-    useFeedbackStore().setFeedbackVisibility(true, `Theme has been set to ${ isDarkMode.value ? 'dark' : 'light' } mode`)
+    localStorage.setItem('__dark-mode__', JSON.stringify(darkMode.value))
+    useFeedbackStore().setFeedbackVisibility(true, `Theme has been set to ${ darkMode.value ? 'dark' : 'light' } mode`)
   }
 
-  const resetThemeMode = () => {
+  watchEffect(() => {
+
+    //- Always remove dark mode styles when not logged in
+    if ( !userIsLoggedIn() )
+      return document.body.classList.remove('dark-mode')
+
+    //- Store setting in local storage
+    localStorage.setItem('__dark-mode__', JSON.stringify(darkMode.value))
+
+    if ( darkMode.value )
+      return document.body.classList.add('dark-mode')
+
     document.body.classList.remove('dark-mode')
-    themeMode.value = false
-  }
+  })
 
   return {
-    isDarkMode,
-    setTheme
+    darkMode,
+    toggleTheme
   }
 })
