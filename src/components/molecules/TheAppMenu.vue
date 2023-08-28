@@ -4,6 +4,7 @@
 
         <AppCloseButton 
           @click.stop="$emit('close')"
+          :light="isDarkMode"
         />
 
         <button 
@@ -107,6 +108,14 @@ import { useThemeStore } from '@/stores/app/theme'
         opacity: 1;
         visibility: visible;
         transform: translate(-50%, -50%);
+      }
+    }
+
+    body.dark-mode & {
+      background-color: $darkColor;
+      
+      &__menu-btn {
+        color: $themeWhite;
       }
     }
   }
