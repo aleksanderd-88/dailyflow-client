@@ -1,7 +1,7 @@
 <template>
   <button type="button" class="task-item" :class="modifiedClass">
     <div class="flex-content">
-      <span class="material-symbols-outlined" v-if="task.completed">
+      <span class="material-symbols-outlined task-item__complete-icon" v-if="task.completed">
         done
       </span>
       
@@ -15,7 +15,7 @@
       class="task-item__action-btn" 
       @click.stop="bookmark(task)">
 
-      <span class="material-symbols-outlined">
+      <span class="material-symbols-outlined task-item__bookmark-icon">
         grade
       </span>
 
@@ -114,14 +114,6 @@ import { useRoute, useRouter } from 'vue-router';
       font-size: .8rem;
     }
 
-    &--bookmark {
-      #{$root}__action-btn {
-        span {
-          color: #ffc400;
-        }
-      }
-    }
-
     &--complete {
       #{$root}__description {
         color: #ccc;
@@ -136,6 +128,35 @@ import { useRoute, useRouter } from 'vue-router';
     @media (min-width: 1024px) {
       &:hover {
         background-color: darken(#EFEFF5, 2%)
+      }
+    }
+
+    body.dark-mode & {
+
+      &__complete-icon {
+        color: $themeWhite;
+      }
+
+      &__description {
+        color: $themeWhite;
+      }
+
+      @media (min-width: 1024px) {
+        &:hover {
+          background-color: $darkColor
+        }
+      }
+
+      &__bookmark-icon {
+        color: $themeWhite;
+      }
+    }
+
+    &--bookmark {
+      #{$root}__action-btn {
+        span {
+          color: #ffc400;
+        }
       }
     }
   }

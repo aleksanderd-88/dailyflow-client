@@ -201,5 +201,28 @@ import orderBy from 'lodash/orderBy'
         padding-bottom: calc(2rem + 60px);
       }
     }
+
+    body.dark-mode & {
+      background-color: darken($darkColor, 2%);
+
+      &__back-btn {
+        span {
+          color: $themeWhite;
+        }
+      }
+
+      &__hide-resolved-btn {
+        background-color: lighten($darkColor, 4%);
+        color: $themeWhite;
+      }
+
+      &__name {
+        color: $themeWhite;
+      }
+
+      &__task-count {
+        color: $themeWhite;
+      }
+    }
   }
 </style>
