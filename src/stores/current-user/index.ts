@@ -2,6 +2,8 @@ import { defineStore } from "pinia";
 import { computed, ref } from 'vue'
 import { useLoadingStore } from "../app/loading";
 import API from '@/services/api'
+import { useAPIStore } from "../api";
+import { useBookmarkStore } from "../api/bookmark";
 
 type UserProps = {
   name: string
@@ -43,6 +45,8 @@ export const useCurrentUserStore = defineStore('currentUser', () => {
   }
 
   const clearCurrentUser = () => {
+    useAPIStore().clearData()
+    useBookmarkStore().clearBookmarks()
     localStorage.removeItem('__user__')
     setCurrentUser(null)
   }
