@@ -53,6 +53,10 @@ export const useBookmarkStore = defineStore('bookmark', () => {
       .finally(() => useLoadingStore().setLoading(false))
   }
 
+  const clearBookmarks = () => {
+    bookmarks.value = [] as BookmarkType[]
+  }
+
   const items = computed(() => bookmarks.value || [])
   const itemCount = computed(() => bookmarkCount.value)
 
@@ -61,6 +65,7 @@ export const useBookmarkStore = defineStore('bookmark', () => {
     deleteBookmark,
     listBookmark,
     items,
-    itemCount
+    itemCount,
+    clearBookmarks
   }
 })
