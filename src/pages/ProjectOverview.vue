@@ -104,9 +104,9 @@ import orderBy from 'lodash/orderBy'
 
   const project = computed(() => useAPIStore().item)
   const tasks = computed(() => project.value?.tasks.filter(task => !task.completed) || [])
-  const resolvedTasks = computed(() => orderBy(project.value?.tasks.filter(task => task.completed), ['createdAt'], ['desc']))
+  const resolvedTasks = computed(() => orderBy(project.value?.tasks?.filter(task => task.completed), ['createdAt'], ['desc']))
 
-  const taskCount = computed(() => project.value?.tasks.length)
+  const taskCount = computed(() => project.value?.tasks?.length)
 
   const navigateBack = () => router.go(-1)
 

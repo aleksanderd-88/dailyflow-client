@@ -39,6 +39,7 @@ import AppOverlay from '@/components/organisms/AppOverlay.vue';
 import AppCloseButton from '../atoms/AppCloseButton.vue';
 import { computed } from 'vue';
 import { useThemeStore } from '@/stores/app/theme'
+import { useAPIStore } from '@/stores/api';
 
   const props = defineProps({
     isVisible: {
@@ -60,6 +61,7 @@ import { useThemeStore } from '@/stores/app/theme'
   const logout = () => {
     if (!confirm('You are about to logout. Do you wish to continue?')) return
 
+    useAPIStore().clearData()
     useCurrentUserStore().clearCurrentUser()
     router.replace('/')
     emit('close')
