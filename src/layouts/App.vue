@@ -17,9 +17,7 @@ import { useCurrentUserStore } from '@/stores/current-user';
 import { ref, watchEffect } from 'vue';
 import { userIsLoggedIn } from '@/utils/authentication';
 import { useAPIStore } from '@/stores/api';
-import { useRouter } from 'vue-router';
 
-const router = useRouter()
 const seconds = ref(0)
 const sessionTimeLimit = ref(300) //- Defined in seconds
 const isInactive = ref(false)
@@ -29,7 +27,7 @@ const logout = () => {
   useAPIStore().clearData()
   useCurrentUserStore().clearCurrentUser()
   document.removeEventListener('mousemove', onMouseMove)
-  router.replace('/')
+  location.reload() //- Reload page to prevent it from getting stuck at protected route(s)
 }
 
 const setIntervalCounter = () => seconds.value++
@@ -49,13 +47,10 @@ watchEffect(() => {
 
     if ( seconds.value === sessionTimeLimit.value ) {
       isInactive.value = true
-      clearInterval(timerId.value)
-
+      
       if ( isInactive.value ) {
-        if ( !confirm('You have been inactive for 5 minutes and your session has ended. Continue signing out?') ) {
-          clearInterval(timerId.value)
+        if ( !confirm('You have been inactive for 5 minutes and your session has ended. Continue signing out?') ) 
           return
-        } 
 
         isInactive.value = false
         logout()
@@ -63,6 +58,8 @@ watchEffect(() => {
     }
   } else {
     //- Not logged in
+    isInactive.value = false
+    seconds.value = 0
     clearInterval(timerId.value)
     document.removeEventListener('mousemove', onMouseMove) //- Make sure to remove event listener
   }
