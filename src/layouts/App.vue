@@ -52,7 +52,7 @@ watchEffect(() => {
       clearInterval(timerId.value)
 
       if ( isInactive.value ) {
-        if ( !confirm('You have been inactive for 5 minutes and your session has ended. Continue with logging out?') ) {
+        if ( !confirm('You have been inactive for 5 minutes and your session has ended. Continue signing out?') ) {
           clearInterval(timerId.value)
           return
         } 
