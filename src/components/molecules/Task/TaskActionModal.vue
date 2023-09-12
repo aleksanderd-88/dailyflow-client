@@ -1,7 +1,7 @@
 <template>
-  <AppOverlay :is-visible="isVisible" @close="$emit('close')">
+  <AppOverlay :is-visible="isVisible" @close="close()">
     <div class="action-modal" :class="modifiedClass">
-      <AppCloseButton @close="$emit('close')" />
+      <AppCloseButton @close="close()" />
       
       <section class="action-modal__actions">
         <h1 class="action-modal__headline">Choose following actions</h1>
@@ -50,6 +50,7 @@ import API from '@/services/api'
 import { useAPIStore } from '@/stores/api';
 import AppOverlay from '@/components/organisms/AppOverlay.vue';
 import AppCloseButton from '@/components/atoms/AppCloseButton.vue'
+import { useLoadingStore } from '@/stores/app/loading';
 
   type TaskType = {
     _id: string, 
@@ -74,23 +75,38 @@ import AppCloseButton from '@/components/atoms/AppCloseButton.vue'
     (event: 'edit', task: TaskType): void
   }>()
 
-  const modifiedClass = computed(() => props.isVisible && 'action-modal--visible')
+  const isLoading = computed(() => useLoadingStore().isLoading)
+
+  const modifiedClass = computed(() => {
+    let className = ''
+    if ( props.isVisible )
+      className += ' action-modal--visible'
+    if ( isLoading.value )
+      className += ' action-modal--disabled'
+
+    return className
+  })
 
   const markComplete = (id: string, projectId: string) => {
     API.markComplete(id).then(() => useAPIStore().getProject(projectId))
     .catch((err) => console.log(err))
-    .finally(() => emit('close'))
+    .finally(() => close())
   }
 
   const editTask = (task: TaskType) => {
     emit('edit', task)
-    emit('close')
+    close()
   }
 
   const deleteTask = (id: string) => {
     if ( !confirm('You are about to delete this task. Do you wish to continue?') ) return
 
-    useAPIStore().deleteTask(id).then(() => emit('close'))
+    useAPIStore().deleteTask(id).then(() => close())
+  }
+
+  const close = () => {
+    if ( isLoading.value ) return
+    emit('close')
   }
 </script>
 
@@ -141,6 +157,18 @@ import AppCloseButton from '@/components/atoms/AppCloseButton.vue'
       }
       &--delete-btn {
         background-color: lighten(#ff3d00, 5%);
+      }
+    }
+
+    &--disabled {
+      &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1000;
       }
     }
 
