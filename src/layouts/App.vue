@@ -6,6 +6,11 @@
     <router-view />
     
     <AppFeedback />
+
+    <AppConfirmation 
+      headline="Logout"
+      text="You have been inactive for 5 minutes and your session has ended. Continue signing out?"
+    />
   </div>
 </template>
 
@@ -17,6 +22,7 @@ import { useCurrentUserStore } from '@/stores/current-user';
 import { ref, watchEffect } from 'vue';
 import { userIsLoggedIn } from '@/utils/authentication';
 import { useAPIStore } from '@/stores/api';
+import AppConfirmation from '@/components/molecules/AppConfirmation.vue';
 
 const seconds = ref(0)
 const sessionTimeLimit = ref(300) //- Defined in seconds
