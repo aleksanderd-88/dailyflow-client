@@ -28,7 +28,7 @@ import { useAPIStore } from '@/stores/api';
 import AppConfirmation from '@/components/molecules/AppConfirmation.vue';
 
 const seconds = ref(0)
-const sessionTimeLimit = ref(5) //- Defined in seconds
+const sessionTimeLimit = ref(300) //- Defined in seconds
 const isInactive = ref(false)
 const timerId = ref<NodeJS.Timer>()
 const confirmationIsVisible = ref(false)
@@ -62,7 +62,7 @@ watchEffect(() => {
     if ( seconds.value === sessionTimeLimit.value ) {
       isInactive.value = true
       confirmationIsVisible.value = true
-      sessionTimeLimit.value = 5
+      sessionTimeLimit.value = 60
       seconds.value = 0
     }
 
