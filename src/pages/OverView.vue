@@ -1,9 +1,8 @@
 <template>
   <div class="l-base overview" :class="modifiedClass">
     <main class="l-base__content overview__content">
-      <template v-if="projectListIsEmpty">
-        <h2 class="overview__sub-headline">No projects created yet ...</h2>
-      </template>
+      <h2 class="overview__sub-headline" v-if="!projects">No projects created yet ...</h2>
+      <h2 class="overview__sub-headline" v-else-if="!projects.length">Loading projects ...</h2>
 
       <template v-else>
         <h1 class="l-base__headline">My list</h1>
