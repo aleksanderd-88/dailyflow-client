@@ -6,6 +6,14 @@
     <router-view />
     
     <AppFeedback />
+
+    <AppConfirmation 
+      headline="Logout"
+      text="You have been inactive for 5 minutes and your session has ended. Continue signing out?"
+      :is-visible="confirmationIsVisible"
+      @close="confirmationIsVisible = false"
+      @confirm="logout()"
+    />
   </div>
 </template>
 
@@ -17,11 +25,13 @@ import { useCurrentUserStore } from '@/stores/current-user';
 import { ref, watchEffect } from 'vue';
 import { userIsLoggedIn } from '@/utils/authentication';
 import { useAPIStore } from '@/stores/api';
+import AppConfirmation from '@/components/molecules/AppConfirmation.vue';
 
 const seconds = ref(0)
 const sessionTimeLimit = ref(300) //- Defined in seconds
 const isInactive = ref(false)
 const timerId = ref<NodeJS.Timer>()
+const confirmationIsVisible = ref(false)
 
 const logout = () => {
   useAPIStore().clearData()
@@ -43,19 +53,22 @@ const onMouseMove = () => resetTimer()
 watchEffect(() => {
   if ( userIsLoggedIn() ) {
     //- Logged in
-    document.addEventListener('mousemove', onMouseMove)
+
+    //-Do NOT reset timer IF confirmation dialog is open and user has been inactive
+    if ( confirmationIsVisible.value )
+      document.removeEventListener('mousemove', onMouseMove)
+    else document.addEventListener('mousemove', onMouseMove)
 
     if ( seconds.value === sessionTimeLimit.value ) {
       isInactive.value = true
-      
-      if ( isInactive.value ) {
-        if ( !confirm('You have been inactive for 5 minutes and your session has ended. Continue signing out?') ) 
-          return
-
-        isInactive.value = false
-        logout()
-      }
+      confirmationIsVisible.value = true
+      sessionTimeLimit.value = 60
+      seconds.value = 0
     }
+
+    if ( (seconds.value + 1) === sessionTimeLimit.value && confirmationIsVisible.value )
+      return logout()
+    
   } else {
     //- Not logged in
     isInactive.value = false
