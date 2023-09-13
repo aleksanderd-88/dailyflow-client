@@ -1,6 +1,6 @@
 <template>
-  <AppOverlay :is-visible="true">
-    <div class="app-confirmation">
+  <AppOverlay :is-visible="isVisible" @close="$emit('close')">
+    <div class="app-confirmation" :class="modifiedClass">
       <main class="app-confirmation__content">
         <section class="app-confirmation__text-content">
           <h1 class="app-confirmation__headline">
@@ -13,14 +13,22 @@
         </section>
 
         <section class="app-confirmation__actions">
-          <button type="button" class="app-confirmation__action-btn app-confirmation__action-btn--secondary">
+          <button 
+            type="button" 
+            class="app-confirmation__action-btn app-confirmation__action-btn--secondary"
+            @click.stop="$emit('close')"
+          >
             Cancel
             <span class="material-symbols-outlined">
               close
             </span>
           </button>
 
-          <button type="button" class="app-confirmation__action-btn app-confirmation__action-btn--primary">
+          <button 
+            type="button" 
+            class="app-confirmation__action-btn app-confirmation__action-btn--primary"
+            @click.stop="$emit('confirm')"
+          >
             Log out
             <span class="material-symbols-outlined">
               logout
@@ -33,9 +41,10 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import AppOverlay from '../organisms/AppOverlay.vue';
 
-defineProps({
+const props = defineProps({
   headline: {
     type: String,
     default: ''
@@ -44,8 +53,15 @@ defineProps({
   text: {
     type: String,
     default: ''
+  },
+
+  isVisible: {
+    type: Boolean,
+    default: false
   }
 })
+
+const modifiedClass = computed(() => props.isVisible && 'app-confirmation--visible')
 
 </script>
 
@@ -56,7 +72,10 @@ defineProps({
     left: 50%;
     width: 95%;
     max-width: 400px;
-    transform: translate(-50%, -50%);
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(-50%, 2px);
+    transition: transform .25s, visibility .25s, opacity .25s ease;
 
     &__content {
       padding: 1rem;
@@ -103,6 +122,12 @@ defineProps({
         background-color: $primary;
         color: $themeWhite;
       }
+    }
+
+    &--visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%, -50%);
     }
   }
 </style>
