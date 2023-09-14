@@ -11,6 +11,8 @@ type UserProps = {
   token: string
   password: string
   confirmedPassword: string
+  darkMode: boolean
+  _id: string
 }
 
 export const useCurrentUserStore = defineStore('currentUser', () => {
