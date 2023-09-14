@@ -94,5 +94,8 @@ export default {
   },
   authenticateUser(params: ParamType): Promise<AxiosResponse> {
     return client.patch('/users/auth', params)
+  },
+  updateUser(id: string, params: ParamType): Promise<AxiosResponse> {
+    return client.patch(`/users/${ id }/update`, params)
   }
 }
