@@ -38,3 +38,6 @@ jobs:
 
       - name: Run Jest Tests
         run: yarn run test
+
+      - name: Run linter test
+        run: yarn run lint

@@ -2,21 +2,36 @@ import { defineStore } from "pinia";
 import { ref, computed, watchEffect } from 'vue'
 import { useFeedbackStore } from "./feedback";
 import { userIsLoggedIn } from "@/utils/authentication";
+import API from '@/services/api'
+import { useLoadingStore } from "./loading";
+import { useCurrentUserStore } from "../current-user";
 
 export const useThemeStore = defineStore('theme', () => {
   
-  const isThemeDark = computed(() => Boolean(JSON.parse(localStorage.getItem('__dark-mode__') as string)))
-  const darkMode = ref(isThemeDark.value || false)
+  const isThemeDark = computed(() => Boolean(useCurrentUserStore().currentUser?.darkMode))
+  const darkMode = ref(false)
 
   const toggleTheme = () => {
-    if ( !darkMode.value ) {
+    useLoadingStore().setLoading(true)
+
+    if ( !isThemeDark.value ) {
       darkMode.value = true
     } else {
       darkMode.value = false
     }
 
-    localStorage.setItem('__dark-mode__', JSON.stringify(darkMode.value))
-    useFeedbackStore().setFeedbackVisibility(true, `Theme has been set to ${ darkMode.value ? 'dark' : 'light' } mode`)
+    const params = { data: { darkMode: darkMode.value } }
+    const id = useCurrentUserStore().currentUser?._id as string
+
+    API.updateUser(id, params).then(({ data }) => {
+      useFeedbackStore().setFeedbackVisibility(true, `Theme has been set to ${ data.darkMode ? 'dark' : 'light' } mode`)
+      useCurrentUserStore().setCurrentUser(data)
+    })
+    .catch(err => {
+      console.log(err)
+      useFeedbackStore().setFeedbackVisibility(true, 'Something went wrong ...', 'error', 5000)
+    })
+    .finally(() => useLoadingStore().setLoading(false))
   }
 
   watchEffect(() => {
@@ -25,10 +40,7 @@ export const useThemeStore = defineStore('theme', () => {
     if ( !userIsLoggedIn() )
       return document.body.classList.remove('dark-mode')
 
-    //- Store setting in local storage
-    localStorage.setItem('__dark-mode__', JSON.stringify(darkMode.value))
-
-    if ( darkMode.value )
+    if ( isThemeDark.value )
       return document.body.classList.add('dark-mode')
 
     document.body.classList.remove('dark-mode')

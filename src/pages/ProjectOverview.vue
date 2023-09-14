@@ -103,7 +103,7 @@ import orderBy from 'lodash/orderBy'
   const isLoading = computed(() => useLoadingStore().isLoading)
 
   const project = computed(() => useAPIStore().item)
-  const tasks = computed(() => project.value?.tasks.filter(task => !task.completed) || [])
+  const tasks = computed(() => project.value?.tasks?.filter(task => !task.completed) || [])
   const resolvedTasks = computed(() => orderBy(project.value?.tasks?.filter(task => task.completed), ['createdAt'], ['desc']))
 
   const taskCount = computed(() => project.value?.tasks?.length)
