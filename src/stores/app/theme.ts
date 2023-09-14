@@ -20,14 +20,10 @@ export const useThemeStore = defineStore('theme', () => {
       darkMode.value = false
     }
 
-    const params = { 
-      data: { 
-        darkMode: darkMode.value, 
-        id: useCurrentUserStore().currentUser?._id 
-      } 
-    }
+    const params = { data: { darkMode: darkMode.value } }
+    const id = useCurrentUserStore().currentUser?._id as string
 
-    API.updateUser(params).then(({ data }) => {
+    API.updateUser(id, params).then(({ data }) => {
       useFeedbackStore().setFeedbackVisibility(true, `Theme has been set to ${ data.darkMode ? 'dark' : 'light' } mode`)
       useCurrentUserStore().setCurrentUser(data)
     })
