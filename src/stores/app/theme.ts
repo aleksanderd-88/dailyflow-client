@@ -40,8 +40,10 @@ export const useThemeStore = defineStore('theme', () => {
     if ( !userIsLoggedIn() )
       return document.body.classList.remove('dark-mode')
 
-    if ( isThemeDark.value )
+    if ( isThemeDark.value ) {
+      darkMode.value = isThemeDark.value
       return document.body.classList.add('dark-mode')
+    }
 
     document.body.classList.remove('dark-mode')
   })
